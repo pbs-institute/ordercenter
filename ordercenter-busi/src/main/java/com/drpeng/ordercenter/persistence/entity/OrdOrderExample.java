@@ -828,6 +828,206 @@ public class OrdOrderExample {
             return (Criteria) this;
         }
 
+        public Criteria andAppIdIsNull() {
+            addCriterion("app_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppIdIsNotNull() {
+            addCriterion("app_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppIdEqualTo(Integer value) {
+            addCriterion("app_id =", value, "appId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppIdNotEqualTo(Integer value) {
+            addCriterion("app_id <>", value, "appId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppIdGreaterThan(Integer value) {
+            addCriterion("app_id >", value, "appId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("app_id >=", value, "appId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppIdLessThan(Integer value) {
+            addCriterion("app_id <", value, "appId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppIdLessThanOrEqualTo(Integer value) {
+            addCriterion("app_id <=", value, "appId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppIdIn(List<Integer> values) {
+            addCriterion("app_id in", values, "appId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppIdNotIn(List<Integer> values) {
+            addCriterion("app_id not in", values, "appId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppIdBetween(Integer value1, Integer value2) {
+            addCriterion("app_id between", value1, value2, "appId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("app_id not between", value1, value2, "appId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutOrderNumberIsNull() {
+            addCriterion("out_order_number is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutOrderNumberIsNotNull() {
+            addCriterion("out_order_number is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutOrderNumberEqualTo(String value) {
+            addCriterion("out_order_number =", value, "outOrderNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutOrderNumberNotEqualTo(String value) {
+            addCriterion("out_order_number <>", value, "outOrderNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutOrderNumberGreaterThan(String value) {
+            addCriterion("out_order_number >", value, "outOrderNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutOrderNumberGreaterThanOrEqualTo(String value) {
+            addCriterion("out_order_number >=", value, "outOrderNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutOrderNumberLessThan(String value) {
+            addCriterion("out_order_number <", value, "outOrderNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutOrderNumberLessThanOrEqualTo(String value) {
+            addCriterion("out_order_number <=", value, "outOrderNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutOrderNumberLike(String value) {
+            addCriterion("out_order_number like", value, "outOrderNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutOrderNumberNotLike(String value) {
+            addCriterion("out_order_number not like", value, "outOrderNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutOrderNumberIn(List<String> values) {
+            addCriterion("out_order_number in", values, "outOrderNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutOrderNumberNotIn(List<String> values) {
+            addCriterion("out_order_number not in", values, "outOrderNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutOrderNumberBetween(String value1, String value2) {
+            addCriterion("out_order_number between", value1, value2, "outOrderNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutOrderNumberNotBetween(String value1, String value2) {
+            addCriterion("out_order_number not between", value1, value2, "outOrderNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdIsNull() {
+            addCriterion("region_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdIsNotNull() {
+            addCriterion("region_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdEqualTo(String value) {
+            addCriterion("region_id =", value, "regionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdNotEqualTo(String value) {
+            addCriterion("region_id <>", value, "regionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdGreaterThan(String value) {
+            addCriterion("region_id >", value, "regionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdGreaterThanOrEqualTo(String value) {
+            addCriterion("region_id >=", value, "regionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdLessThan(String value) {
+            addCriterion("region_id <", value, "regionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdLessThanOrEqualTo(String value) {
+            addCriterion("region_id <=", value, "regionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdLike(String value) {
+            addCriterion("region_id like", value, "regionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdNotLike(String value) {
+            addCriterion("region_id not like", value, "regionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdIn(List<String> values) {
+            addCriterion("region_id in", values, "regionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdNotIn(List<String> values) {
+            addCriterion("region_id not in", values, "regionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdBetween(String value1, String value2) {
+            addCriterion("region_id between", value1, value2, "regionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdNotBetween(String value1, String value2) {
+            addCriterion("region_id not between", value1, value2, "regionId");
+            return (Criteria) this;
+        }
+
         public Criteria andRemarkIsNull() {
             addCriterion("remark is null");
             return (Criteria) this;
