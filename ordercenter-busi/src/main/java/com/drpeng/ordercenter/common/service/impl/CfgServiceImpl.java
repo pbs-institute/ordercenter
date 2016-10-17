@@ -20,15 +20,12 @@ public class CfgServiceImpl implements ICfgService {
     @Autowired
     private CfgBusinessMapper cfgBusinessMapper;
     @Autowired
-    private CfgBusinessExample cfgBusinessExample;
-    @Autowired
     private CfgBusinessImplMapper cfgBusinessImplMapper;
-    @Autowired
-    private CfgBusinessImplExample cfgBusinessImplExample;
+
     @Override
     public CfgBusiness findCfgBusiness(int businessId) {
-        cfgBusinessExample.clear();
-        cfgBusinessExample.or().andBusinessIdEqualTo(businessId);
+        CfgBusinessExample cfgBusinessExample = new CfgBusinessExample();
+        cfgBusinessExample.or().andBusinessIdEqualTo(businessId).andStatusEqualTo(0);
         List<CfgBusiness> cfgBusinessList = cfgBusinessMapper.selectByExample(cfgBusinessExample);
         if(cfgBusinessList != null && cfgBusinessList.size()>0)
             return cfgBusinessList.get(0);
@@ -37,8 +34,8 @@ public class CfgServiceImpl implements ICfgService {
 
     @Override
     public CfgBusinessImpl findCfgBusinessImpl(int businessId, int delPartyId) {
-        cfgBusinessImplExample.clear();
-        cfgBusinessImplExample.or().andBusinessIdEqualTo(businessId).andDeliveryPartyEqualTo(delPartyId);
+        CfgBusinessImplExample cfgBusinessImplExample = new CfgBusinessImplExample();
+        cfgBusinessImplExample.or().andBusinessIdEqualTo(businessId).andDeliveryPartyEqualTo(delPartyId).andStatusEqualTo(0);
         List<CfgBusinessImpl> cfgBusinessImplList = cfgBusinessImplMapper.selectByExample(cfgBusinessImplExample);
         if(cfgBusinessImplList!= null && cfgBusinessImplList.size()>0)
             return cfgBusinessImplList.get(0);

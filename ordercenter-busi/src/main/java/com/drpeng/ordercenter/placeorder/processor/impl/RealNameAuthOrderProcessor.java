@@ -2,6 +2,10 @@ package com.drpeng.ordercenter.placeorder.processor.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.drpeng.ordercenter.persistence.entity.OrdDetail;
+import com.drpeng.ordercenter.persistence.mapper.OrdDetailMapper;
+import com.drpeng.ordercenter.persistence.mapper.OrdOrderMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +13,7 @@ import java.util.List;
 /**
  * Created by liurl3 on 2016/10/14.
  */
+@Component
 public class RealNameAuthOrderProcessor extends AbstractOrderProcessorImpl{
     @Override
     public void parseDetailParam(JSONObject jsonObject) throws Exception {
