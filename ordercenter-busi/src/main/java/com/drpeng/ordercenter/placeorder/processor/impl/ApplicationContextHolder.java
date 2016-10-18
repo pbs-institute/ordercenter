@@ -17,7 +17,7 @@ public class ApplicationContextHolder implements ApplicationContextAware {
       //  System.out.print("===========applicationContext:"+applicationContext);
     }
     public static ApplicationContext getConext(){
-//        System.out.print("===========context:"+context);
+       //System.out.print("===========context:"+context);
         return context;
     }
 }

@@ -13,7 +13,6 @@ import java.util.List;
 /**
  * Created by liurl3 on 2016/10/14.
  */
-@Component
 public class RealNameAuthOrderProcessor extends AbstractOrderProcessorImpl{
     @Override
     public void parseDetailParam(JSONObject jsonObject) throws Exception {

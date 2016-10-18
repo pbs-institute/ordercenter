@@ -7,6 +7,8 @@ import com.drpeng.ordercenter.persistence.mapper.OrdDetailMapper;
 import com.drpeng.ordercenter.persistence.mapper.OrdOrderMapper;
 import com.drpeng.ordercenter.placeorder.processor.OrderProcessor;
 import com.alibaba.fastjson.JSONObject;
+import com.drpeng.ordercenter.placeorder.service.IPlaceOrderService;
+import com.drpeng.ordercenter.placeorder.service.impl.PlaceOrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,14 +17,10 @@ import java.util.*;
 /**
  * Created by liurl3 on 2016/10/14.
  */
-@Component
 public abstract class AbstractOrderProcessorImpl implements OrderProcessor {
     protected Order order = new Order();
     protected List<Order> subOrders = new ArrayList<Order>();
-    @Autowired
-    private OrdOrderMapper ordOrderMapper;
-    @Autowired
-    private OrdDetailMapper ordDetailMapper;
+    protected IPlaceOrderService placeOrderService = (IPlaceOrderService)ApplicationContextHolder.getConext().getBean("placeOrderServiceImpl");
     @Override
     public Map processor(JSONObject jsonObject){
         Map map = new HashMap();
@@ -49,6 +47,7 @@ public abstract class AbstractOrderProcessorImpl implements OrderProcessor {
             map.put("result_code","FAIL");
             map.put("error_code","");
             map.put("error_msg",e.toString());
+            e.printStackTrace();
             return map;
         }
         map.put("return_code","SUCCESS");
@@ -92,16 +91,11 @@ public abstract class AbstractOrderProcessorImpl implements OrderProcessor {
     }
 
     protected void saveOrder(Order order,List<Order> subOrders){
-        if(order != null){
-            if(order.getOrdOrder() != null)
-                 ordOrderMapper.insert(order.getOrdOrder());
-            if(order.getOrdDetailList() != null && order.getOrdDetailList().size()>0){
-                Map map = new HashMap();
-                map.put("ordDetails",order.getOrdDetailList());
-                map.put("orderId",order.getOrdOrder().getOrderId());
-                ordDetailMapper.insertBatch(map);
+        placeOrderService.saveOrder(order);//save base order
+        if(subOrders != null && subOrders.size()>0){
+            for (Order ord:subOrders){
+                placeOrderService.saveOrder(order);//save suborder
             }
-
         }
     }
 

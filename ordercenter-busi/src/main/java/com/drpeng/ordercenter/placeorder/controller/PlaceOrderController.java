@@ -31,25 +31,26 @@ public class PlaceOrderController {
     public Map<String,Object> placeOrder(@RequestBody JSONObject orderJson){
         Map<String,Object> rtnMap = new HashMap<String,Object>();
         String businessId = null;
+        AbstractOrderProcessorImpl orderImpl = null;
         try {
             businessId = this.getParamValueByKey(orderJson,"business_id",true);
+            CfgBusiness cfgBusiness = cfgService.findCfgBusiness(Integer.valueOf(businessId));
+            if(cfgBusiness != null){
+                String ordImplClass = cfgBusiness.getOrderImplClass();
+                if(ordImplClass != null && !ordImplClass.isEmpty()) {
+                    orderImpl = (AbstractOrderProcessorImpl) Class.forName(ordImplClass).newInstance();
+                }
+            }else {
+                rtnMap.put("return_code","FAIL");
+                rtnMap.put("return_msg","The businessId:" + businessId + " not be configuration");
+            }
         } catch (Exception e) {
             rtnMap.put("return_code","FAIL");
-            rtnMap.put("return_msg",e.getMessage());
-            return rtnMap;
+            rtnMap.put("return_msg",e.toString());
+            e.printStackTrace();
         }
-        CfgBusiness cfgBusiness = cfgService.findCfgBusiness(Integer.valueOf(businessId));
-        if(cfgBusiness != null){
-            String ordImplClass = cfgBusiness.getOrderImplClass();
-            if(ordImplClass != null && !ordImplClass.isEmpty()) {
-               // AbstractOrderProcessorImpl orderImpl = (AbstractOrderProcessorImpl) Class.forName(ordImplClass).newInstance();
-                AbstractOrderProcessorImpl orderImpl = (AbstractOrderProcessorImpl)ApplicationContextHolder.getConext().getBean(ordImplClass);
-                rtnMap = orderImpl.processor(orderJson);
-            }
-        }else {
-            rtnMap.put("return_code","FAIL");
-            rtnMap.put("return_msg","The businessId:" + businessId + " not be configuration");
-        }
+        if(orderImpl != null)
+            rtnMap = orderImpl.processor(orderJson);
         return rtnMap;
     }
     private String getParamValueByKey(JSONObject jsonObject,String key,boolean isEmpty) throws Exception {
