@@ -21,11 +21,24 @@ public interface IActivitiBaseService {
 
     public void startProcessByKey(String processKey, Map<String,Object> varMap);
 
+
+    /**
+     * 按条件查询任务总数
+     *
+     * @param kvMap
+     * @return
+     */
+    public long countTaskByValueLike(Map<String,String> kvMap);
+
+
     /**
      * 按任务参数查询任务
      * 查询待完成的任务
+     * @param kvMap 查询条件
+     * @param startIndex 初始索引
+     * @param maxResults 查出来的最大数量
      */
-    public List<Task> qryTaskByValuelike(Map<String,String> kvMap);
+    public List<Task> qryTaskByValuelike(Map<String,String> kvMap,int startIndex,int maxResults);
 
     /**
      * 根据任务id获取对应的表单数据

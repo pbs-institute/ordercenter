@@ -76,8 +76,11 @@ public class ActivitiBaseServiceImpl implements IActivitiBaseService {
     /**
      * 按任务参数查询任务
      * 查询待完成的任务
+     * @param kvMap 查询条件
+     * @param startIndex 初始索引
+     * @param maxResults 查出来的最大数量
      */
-    public List<Task> qryTaskByValuelike(Map<String,String> kvMap,int startIndex,int endIndex){
+    public List<Task> qryTaskByValuelike(Map<String,String> kvMap,int startIndex,int maxResults){
         TaskQuery query = taskService.createTaskQuery();
         List<Task> tasks = null;
         //遍历查询条件，逐个添加到query中
@@ -89,10 +92,10 @@ public class ActivitiBaseServiceImpl implements IActivitiBaseService {
         }
 
         //如果分页条件为空，则返回未分页列表，如果有可用的分页条件，返回分页列表
-        if (startIndex == 0 || endIndex == 0 || startIndex > endIndex){
+        if (startIndex == 0 || maxResults == 0){
             tasks = query.list();
         }else {
-            tasks = query.listPage(startIndex,endIndex);
+            tasks = query.listPage(startIndex,maxResults);
         }
         return tasks;
     }
