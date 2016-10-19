@@ -77,20 +77,45 @@ public class ActivitiBaseServiceImpl implements IActivitiBaseService {
      * 按任务参数查询任务
      * 查询待完成的任务
      */
-    public List<Task> qryTaskByValuelike(Map<String,String> kvMap){
+    public List<Task> qryTaskByValuelike(Map<String,String> kvMap,int startIndex,int endIndex){
         TaskQuery query = taskService.createTaskQuery();
         List<Task> tasks = null;
-        if (kvMap == null || kvMap.isEmpty()){
-            tasks = query.list();
-        }else {
+        //遍历查询条件，逐个添加到query中
+        if (kvMap != null || !kvMap.isEmpty()){
             for (String key : kvMap.keySet()) {
                 query.processVariableValueLike(key,kvMap.get(key));
             }
-            tasks = query.list();
+
         }
 
+        //如果分页条件为空，则返回未分页列表，如果有可用的分页条件，返回分页列表
+        if (startIndex == 0 || endIndex == 0 || startIndex > endIndex){
+            tasks = query.list();
+        }else {
+            tasks = query.listPage(startIndex,endIndex);
+        }
         return tasks;
     }
+
+
+    /**
+     * 按条件查询任务总数
+     *
+     * @param kvMap
+     * @return
+     */
+    public long countTaskByValueLike(Map<String,String> kvMap){
+        TaskQuery query = taskService.createTaskQuery();
+        //遍历查询条件，逐个添加到query中
+        if (kvMap != null || !kvMap.isEmpty()){
+            for (String key : kvMap.keySet()) {
+                query.processVariableValueLike(key,kvMap.get(key));
+            }
+
+        }
+        return query.count();
+    }
+
 
     /**
      * 根据任务id获取对应的表单数据
