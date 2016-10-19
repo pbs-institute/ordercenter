@@ -80,7 +80,7 @@ public class ActivitiBaseServiceImpl implements IActivitiBaseService {
     public List<Task> qryTaskByValuelike(Map<String,String> kvMap){
         TaskQuery query = taskService.createTaskQuery();
         List<Task> tasks = null;
-        if (kvMap == null){
+        if (kvMap == null || kvMap.isEmpty()){
             tasks = query.list();
         }else {
             for (String key : kvMap.keySet()) {
