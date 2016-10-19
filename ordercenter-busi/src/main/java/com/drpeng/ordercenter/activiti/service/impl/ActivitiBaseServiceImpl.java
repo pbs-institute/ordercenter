@@ -10,6 +10,7 @@ import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.form.TaskFormData;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Task;
+import org.activiti.engine.task.TaskQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -76,12 +77,18 @@ public class ActivitiBaseServiceImpl implements IActivitiBaseService {
      * 按任务参数查询任务
      * 查询待完成的任务
      */
-    public List<Task> qryTaskByValuelike(String valueKey,String value){
-        //查出所有待处理的任务
-        List<Task> tasks = taskService.createTaskQuery()
-                .processVariableValueLike(valueKey,value)
-                .orderByDueDate().asc()
-                .list();
+    public List<Task> qryTaskByValuelike(Map<String,String> kvMap){
+        TaskQuery query = taskService.createTaskQuery();
+        List<Task> tasks = null;
+        if (kvMap == null){
+            tasks = query.list();
+        }else {
+            for (String key : kvMap.keySet()) {
+                query.processVariableValueLike(key,kvMap.get(key));
+            }
+            tasks = query.list();
+        }
+
         return tasks;
     }
 

@@ -149,13 +149,13 @@ public class ProcessEngineAutoConfigurationTest {
     public void testProcessStart() throws Throwable {
 
         Map<String, Object> varMap = new HashMap<String, Object>();
-        varMap.put("bill_id", "16012312333");
+        varMap.put("bill_id", "16012312334");
         varMap.put("id_number", "222111222333666");
         varMap.put("name", "测试");
         varMap.put("front_side_photo", "/sidePhoto");
         varMap.put("back_side_photo", "/sidePhoto");
         varMap.put("hand_held_photo", "/sidePhoto");
-        varMap.put("ord_order_id", "20000011112");
+        varMap.put("ord_order_id", "220000011112");
 
         activitiBaseService.startProcessByBusi(8000001, null, varMap);
 
@@ -164,7 +164,10 @@ public class ProcessEngineAutoConfigurationTest {
     @Test
     public void testTaskQryByValue() {
 
-        List<Task> tasks = activitiBaseService.qryTaskByValuelike("bill_id", "170123%");
+        Map<String,String> kmap = new HashMap<String,String>();
+        kmap.put("bill_id","16012312334");
+        kmap.put("id_number","222111222333666");
+        List<Task> tasks = activitiBaseService.qryTaskByValuelike(kmap);
 
         for (Task task : tasks) {
             System.out.println("####################");
@@ -174,7 +177,9 @@ public class ProcessEngineAutoConfigurationTest {
                 System.out.println("key:" + s + " value:" + map.get(s));
             }
 
+/*
             activitiBaseService.approveRealName(task.getId(), "true");
+*/
         }
     }
 

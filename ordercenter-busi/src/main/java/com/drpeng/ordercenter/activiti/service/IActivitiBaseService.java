@@ -25,7 +25,7 @@ public interface IActivitiBaseService {
      * 按任务参数查询任务
      * 查询待完成的任务
      */
-    public List<Task> qryTaskByValuelike(String valueKey, String value);
+    public List<Task> qryTaskByValuelike(Map<String,String> kvMap);
 
     /**
      * 根据任务id获取对应的表单数据
