@@ -1,4 +1,5 @@
 package com.drpeng.ordercenter.placeorder.service;
+import com.drpeng.ordercenter.persistence.entity.OrdOrder;
 import com.drpeng.ordercenter.persistence.entity.Order;
 
 /**
@@ -6,4 +7,5 @@ import com.drpeng.ordercenter.persistence.entity.Order;
  */
 public interface IPlaceOrderService {
     public void saveOrder(Order order);
+    public void updateOrderStatus(long orderId ,int status);
 }

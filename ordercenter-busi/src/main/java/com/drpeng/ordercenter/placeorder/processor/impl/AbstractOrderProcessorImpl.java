@@ -1,17 +1,10 @@
 package com.drpeng.ordercenter.placeorder.processor.impl;
 
-import com.drpeng.ordercenter.persistence.entity.OrdDetail;
 import com.drpeng.ordercenter.persistence.entity.OrdOrder;
 import com.drpeng.ordercenter.persistence.entity.Order;
-import com.drpeng.ordercenter.persistence.mapper.OrdDetailMapper;
-import com.drpeng.ordercenter.persistence.mapper.OrdOrderMapper;
 import com.drpeng.ordercenter.placeorder.processor.OrderProcessor;
 import com.alibaba.fastjson.JSONObject;
 import com.drpeng.ordercenter.placeorder.service.IPlaceOrderService;
-import com.drpeng.ordercenter.placeorder.service.impl.PlaceOrderServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import java.util.*;
 
 /**
@@ -41,7 +34,7 @@ public abstract class AbstractOrderProcessorImpl implements OrderProcessor {
             }
             this.calculatePrice();
             this.saveOrder(order, subOrders);
-            this.startWorkflow();
+            this.startWorkflow(order);
         }catch (Exception e){
             map.put("return_code","SUCCESS");
             map.put("result_code","FAIL");
@@ -99,8 +92,7 @@ public abstract class AbstractOrderProcessorImpl implements OrderProcessor {
         }
     }
 
-    protected void startWorkflow(){
-    }
+    protected abstract void startWorkflow(Order order);
 
     private String getParamValueByKey(JSONObject jsonObject,String key,boolean isEmpty) throws Exception {
         Object obj = jsonObject.get(key);

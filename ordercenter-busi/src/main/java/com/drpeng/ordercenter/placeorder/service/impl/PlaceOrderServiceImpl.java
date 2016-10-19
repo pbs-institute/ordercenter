@@ -36,4 +36,13 @@ public class PlaceOrderServiceImpl implements IPlaceOrderService {
             }
         }
     }
+
+    @Override
+    public void updateOrderStatus(long orderId ,int status) {
+        OrdOrder ordOrder = ordOrderMapper.selectByPrimaryKey(orderId);
+        if(ordOrder != null) {
+            ordOrder.setStatus(status);
+            ordOrderMapper.updateByPrimaryKey(ordOrder);
+        }
+    }
 }
