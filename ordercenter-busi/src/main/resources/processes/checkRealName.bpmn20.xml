@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+    <process id="checkRealName" name="Check Real Name" isExecutable="true">
+        <startEvent id="startEvent" name="StartEvent">
+            <extensionElements>
+                <activiti:formProperty id="bill_id" name="计费号码" type="string"
+                                       required="true" writable="true" readable="true"/>
+                <activiti:formProperty id="id_number" name="身份证号" type="string"
+                                       required="true" writable="true" readable="true"/>
+                <activiti:formProperty id="name" name="姓名" type="string"
+                                       required="true" writable="true" readable="true"/>
+                <activiti:formProperty id="front_side_photo" name="身份证正面照" type="string"
+                                       required="true" writable="true" readable="true"/>
+                <activiti:formProperty id="back_side_photo" name="身份证背面照" type="string"
+                                       required="true" writable="true" readable="true"/>
+                <activiti:formProperty id="hand_held_photo" name="身份证手持照" type="string"
+                                       readable="true" writable="true" required="true"/>
+                <activiti:formProperty id="ord_order_id" name="订单编号" type="int"
+                                       readable="true" writable="true" required="true"/>
+            </extensionElements>
+        </startEvent>
+        <userTask id="operatorApprove" name="Operator Approve">
+            <extensionElements>
+                <activiti:formProperty id="bill_id" name="计费号码" type="string" variable="${bill_id}"
+                                       required="true" writable="false" readable="true"/>
+                <activiti:formProperty id="id_number" name="身份证号" type="string" variable="${id_number}"
+                                       required="true" writable="false" readable="true"/>
+                <activiti:formProperty id="name" name="姓名" type="string"  variable="${name}"
+                                       required="true" writable="false" readable="true"/>
+                <activiti:formProperty id="front_side_photo" name="身份证正面照" type="string" variable="${front_side_photo}"
+                                       required="true" writable="false" readable="true"/>
+                <activiti:formProperty id="back_side_photo" name="身份证背面照" type="string" variable="${back_side_photo}"
+                                       required="true" writable="false" readable="true"/>
+                <activiti:formProperty id="hand_held_photo" name="身份证手持照" type="string" variable="${hand_held_photo}"
+                                       required="true" writable="false" readable="true"/>
+                <activiti:formProperty id="ord_order_id" name="订单编号" type="long" variable="${ord_order_id}"
+                                       required="true" writable="false" readable="true"/>
+                <activiti:formProperty id="approved" type="enum" required="true" writable="true">
+                    <activiti:value id="true" name="通过"/>
+                    <activiti:value id="false" name="拒绝"/>
+                </activiti:formProperty>
+            </extensionElements>
+        </userTask>
+        <exclusiveGateway id="exclusiveGateway1"></exclusiveGateway>
+        <serviceTask id="approvePass" name="Approve Pass Task" activiti:expression="${realNameService.manualCheckpassed(execution)}"></serviceTask>
+        <serviceTask id="approveNotPass" name="Approve Not Pass Task" activiti:expression="${realNameService.manualCheckRefused(execution)}"></serviceTask>
+        <endEvent id="endEvent1" name="pass end"></endEvent>
+        <endEvent id="endEvent2" name="not pass end"></endEvent>
+        <sequenceFlow id="flow1" sourceRef="startEvent" targetRef="operatorApprove"></sequenceFlow>
+        <sequenceFlow id="flow2" sourceRef="operatorApprove" targetRef="exclusiveGateway1"></sequenceFlow>
+        <sequenceFlow id="flow3" sourceRef="exclusiveGateway1" targetRef="approvePass">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approved==true}]]></conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow id="flow4" sourceRef="exclusiveGateway1" targetRef="approveNotPass">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approved==false}]]></conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow id="flow5" sourceRef="approvePass" targetRef="endEvent1"></sequenceFlow>
+        <sequenceFlow id="flow6" sourceRef="approveNotPass" targetRef="endEvent2"></sequenceFlow>
+    </process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_checkRealName">
+        <bpmndi:BPMNPlane bpmnElement="checkRealName" id="BPMNPlane_checkRealName">
+            <bpmndi:BPMNShape bpmnElement="startEvent" id="BPMNShape_startEvent">
+                <omgdc:Bounds height="30.0" width="30.0" x="120.0" y="205.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="operatorApprove" id="BPMNShape_operatorApprove">
+                <omgdc:Bounds height="55.0" width="100.0" x="195.0" y="195.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="exclusiveGateway1" id="BPMNShape_exclusiveGateway1">
+                <omgdc:Bounds height="40.0" width="40.0" x="335.0" y="205.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="approvePass" id="BPMNShape_approvePass">
+                <omgdc:Bounds height="55.0" width="130.0" x="415.0" y="115.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="approveNotPass" id="BPMNShape_approveNotPass">
+                <omgdc:Bounds height="55.0" width="125.0" x="420.0" y="275.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="endEvent1" id="BPMNShape_endEvent1">
+                <omgdc:Bounds height="28.0" width="28.0" x="630.0" y="125.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="endEvent2" id="BPMNShape_endEvent2">
+                <omgdc:Bounds height="28.0" width="28.0" x="630.0" y="285.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+                <omgdi:waypoint x="149.99612753317413" y="220.3408210802994"></omgdi:waypoint>
+                <omgdi:waypoint x="195.0" y="221.36363636363637"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+                <omgdi:waypoint x="295.0" y="223.63636363636363"></omgdi:waypoint>
+                <omgdi:waypoint x="335.44444444444446" y="224.55555555555554"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+                <omgdi:waypoint x="367.04819277108436" y="217.04819277108433"></omgdi:waypoint>
+                <omgdi:waypoint x="438.33333333333337" y="170.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+                <omgdi:waypoint x="367.4390243902439" y="232.5609756097561"></omgdi:waypoint>
+                <omgdi:waypoint x="437.258064516129" y="275.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+                <omgdi:waypoint x="545.0" y="141.1128048780488"></omgdi:waypoint>
+                <omgdi:waypoint x="630.0031871177672" y="139.29871247004766"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+                <omgdi:waypoint x="545.0" y="301.14551083591334"></omgdi:waypoint>
+                <omgdi:waypoint x="630.0032865188506" y="299.30333434788866"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</definitions>
