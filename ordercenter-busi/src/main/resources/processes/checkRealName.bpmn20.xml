@@ -15,26 +15,12 @@
                                        required="true" writable="true" readable="true"/>
                 <activiti:formProperty id="hand_held_photo" name="身份证手持照" type="string"
                                        readable="true" writable="true" required="true"/>
-                <activiti:formProperty id="ord_order_id" name="订单编号" type="int"
+                <activiti:formProperty id="ord_order_id" name="订单编号" type="long"
                                        readable="true" writable="true" required="true"/>
             </extensionElements>
         </startEvent>
         <userTask id="operatorApprove" name="Operator Approve">
             <extensionElements>
-                <activiti:formProperty id="bill_id" name="计费号码" type="string" variable="${bill_id}"
-                                       required="true" writable="false" readable="true"/>
-                <activiti:formProperty id="id_number" name="身份证号" type="string" variable="${id_number}"
-                                       required="true" writable="false" readable="true"/>
-                <activiti:formProperty id="name" name="姓名" type="string"  variable="${name}"
-                                       required="true" writable="false" readable="true"/>
-                <activiti:formProperty id="front_side_photo" name="身份证正面照" type="string" variable="${front_side_photo}"
-                                       required="true" writable="false" readable="true"/>
-                <activiti:formProperty id="back_side_photo" name="身份证背面照" type="string" variable="${back_side_photo}"
-                                       required="true" writable="false" readable="true"/>
-                <activiti:formProperty id="hand_held_photo" name="身份证手持照" type="string" variable="${hand_held_photo}"
-                                       required="true" writable="false" readable="true"/>
-                <activiti:formProperty id="ord_order_id" name="订单编号" type="long" variable="${ord_order_id}"
-                                       required="true" writable="false" readable="true"/>
                 <activiti:formProperty id="approved" type="enum" required="true" writable="true">
                     <activiti:value id="true" name="通过"/>
                     <activiti:value id="false" name="拒绝"/>

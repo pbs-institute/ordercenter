@@ -17,6 +17,7 @@
 package com.drpeng.ordercenter;
 
 
+import com.drpeng.ordercenter.activiti.service.IActivitiBaseService;
 import com.drpeng.ordercenter.activiti.service.RealNameService;
 import org.activiti.engine.*;
 import org.activiti.engine.form.FormProperty;
@@ -79,7 +80,6 @@ public class ProcessEngineAutoConfigurationTest {
     }
 
 
-
     @Test
     public void testProcessEngineCreated() throws Throwable {
         Assert.assertNotNull(this.processEngine);
@@ -88,30 +88,31 @@ public class ProcessEngineAutoConfigurationTest {
     }
 
     @Test
-    public void testGetTaskToDo() throws Throwable{
-        List<Task> tasks =  taskService.createTaskQuery().orderByTaskId().asc().list();
-        Map<String,String> variables;
+    public void testGetTaskToDo() throws Throwable {
+        List<Task> tasks = taskService.createTaskQuery().orderByTaskId().asc().list();
+        Map<String, String> variables;
 
         for (Task task : tasks) {
             System.out.println("-----------------------------");
-            System.out.println("任务名："+task.getName());
-            System.out.println("进程id："+task.getProcessDefinitionId());
-            System.out.println("任务id："+task.getId());
-            TaskFormData data =formService.getTaskFormData(task.getId());
+            System.out.println("任务名：" + task.getName());
+            System.out.println("进程id：" + task.getProcessDefinitionId());
+            System.out.println("任务id：" + task.getId());
+            TaskFormData data = formService.getTaskFormData(task.getId());
             List<FormProperty> properties = data.getFormProperties();
             for (FormProperty property : properties) {
-                System.out.println("/tproperty.Id:"+property.getId());
-                System.out.println("/tproperty.name:"+property.getName());
-                System.out.println("/tproperty.value:"+property.getValue());
-                System.out.println("/tproperty.required:"+property.isRequired());
+                System.out.println("/tproperty.Id:" + property.getId());
+                System.out.println("/tproperty.name:" + property.getName());
+                System.out.println("/tproperty.value:" + property.getValue());
+                System.out.println("/tproperty.required:" + property.isRequired());
             }
-            variables = new HashMap<String, String>();
+       /*     variables = new HashMap<String, String>();
             variables.put("approved","true");
-            formService.submitTaskFormData(task.getId(),variables);
+            formService.submitTaskFormData(task.getId(),variables);*/
         }
     }
+
     @Test
-    public void testDelProcessStarted() throws Throwable{
+    public void testDelProcessStarted() throws Throwable {
         List<ProcessInstance> processInstanceList = runtimeService.createProcessInstanceQuery().list();
         for (ProcessInstance processInstance : processInstanceList) {
           /*  //1.删除task
@@ -120,7 +121,11 @@ public class ProcessEngineAutoConfigurationTest {
                 taskService.deleteTask(task.getId(),"error");
             }*/
             //2.删除流程
-            runtimeService.deleteProcessInstance(processInstance.getId(),"errorIns");
+            try{
+                runtimeService.deleteProcessInstance(processInstance.getId(), "errorIns");
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
         }
         //3.删除部署
         List<ProcessDefinition> processDefinitionList =
@@ -128,16 +133,50 @@ public class ProcessEngineAutoConfigurationTest {
                         .processDefinitionKey("checkRealName")
                         .list();
         for (ProcessDefinition processDefinition : processDefinitionList) {
-            this.repositoryService.deleteDeployment(processDefinition.getId());
+            try {
+                this.repositoryService.deleteDeployment(processDefinition.getId());
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
         }
 
     }
 
+    @Autowired
+    IActivitiBaseService activitiBaseService;
+
     @Test
-    public void testProcessStart() throws Throwable{
-        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("checkRealName");
-        Assert.assertNotNull(processInstance.getId());
-        System.out.println("流程已启动："+processInstance.getId());
+    public void testProcessStart() throws Throwable {
+
+        Map<String, Object> varMap = new HashMap<String, Object>();
+        varMap.put("bill_id", "16012312333");
+        varMap.put("id_number", "222111222333666");
+        varMap.put("name", "测试");
+        varMap.put("front_side_photo", "/sidePhoto");
+        varMap.put("back_side_photo", "/sidePhoto");
+        varMap.put("hand_held_photo", "/sidePhoto");
+        varMap.put("ord_order_id", "20000011112");
+
+        activitiBaseService.startProcessByBusi(8000001, null, varMap);
+
     }
+
+    @Test
+    public void testTaskQryByValue() {
+
+        List<Task> tasks = activitiBaseService.qryTaskByValuelike("bill_id", "170123%");
+
+        for (Task task : tasks) {
+            System.out.println("####################");
+            System.out.println("taskId" + task.getId());
+            Map<String, Object> map = activitiBaseService.qryTaskFormDataByExecutionId(task.getExecutionId());
+            for (String s : map.keySet()) {
+                System.out.println("key:" + s + " value:" + map.get(s));
+            }
+
+            activitiBaseService.approveRealName(task.getId(), "true");
+        }
+    }
+
 
 }

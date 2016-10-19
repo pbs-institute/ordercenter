@@ -1,5 +1,6 @@
-package com.drpeng.ordercenter.activiti.service;
+package com.drpeng.ordercenter.activiti.service.impl;
 
+import com.drpeng.ordercenter.activiti.service.IActivitiBaseService;
 import com.drpeng.ordercenter.persistence.entity.CfgBusinessProcessMapping;
 import com.drpeng.ordercenter.persistence.entity.CfgBusinessProcessMappingExample;
 import com.drpeng.ordercenter.persistence.mapper.CfgBusinessMapper;
@@ -7,10 +8,12 @@ import com.drpeng.ordercenter.persistence.mapper.CfgBusinessProcessMappingMapper
 import org.activiti.engine.*;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.form.TaskFormData;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +21,7 @@ import java.util.Map;
  * Created by lifei13 on 2016/10/17.
  */
 @Service
-public class ActivitiBaseService {
+public class ActivitiBaseServiceImpl implements IActivitiBaseService {
 
     @Autowired
     RuntimeService runtimeService;
@@ -30,7 +33,6 @@ public class ActivitiBaseService {
     TaskService taskService;
     @Autowired
     FormService formService;
-
     @Autowired
     CfgBusinessProcessMappingMapper cfgBusinessProcessMappingMapper;
     /**
@@ -55,7 +57,15 @@ public class ActivitiBaseService {
                 .selectByExample(example);
         CfgBusinessProcessMapping processMapping = mappingList.get(0);
 
-        runtimeService.startProcessInstanceByKey(processMapping.getProcessId(),String.valueOf(businessId),varMap);
+        //去找对应ProcessKey中版本最新的流程
+        ProcessDefinition processDefinition = repositoryService
+                .createProcessDefinitionQuery()
+                .processDefinitionKey(processMapping.getProcessId())
+                .latestVersion()
+                .singleResult();
+
+        runtimeService.startProcessInstanceById(processDefinition.getId(),String.valueOf(businessId),varMap);
+        //formService.submitStartFormData(processDefinition.getId(),String.valueOf(businessId),varMap);
     }
 
     public void startProcessByKey(String processKey, Map<String,Object> varMap){
@@ -63,22 +73,37 @@ public class ActivitiBaseService {
     }
 
     /**
-     * 按任务类型查询待处理的任务
+     * 按任务参数查询任务
      * 查询待完成的任务
      */
-    public Map<String,String> qryTask(){
+    public List<Task> qryTaskByValuelike(String valueKey,String value){
         //查出所有待处理的任务
-        List<Task> taskList = taskService.createTaskQuery().orderByTaskId().list();
-        for (Task task : taskList) {
-            //获取流程参数并展示
-            TaskFormData data =formService.getTaskFormData(task.getId());
-            List<FormProperty> properties = data.getFormProperties();
-
-
-        }
-
-        return null;
-
+        List<Task> tasks = taskService.createTaskQuery()
+                .processVariableValueLike(valueKey,value)
+                .orderByDueDate().asc()
+                .list();
+        return tasks;
     }
+
+    /**
+     * 根据任务id获取对应的表单数据
+     * @param executionId 任务执行id
+     * @return
+     */
+    public Map<String,Object>  qryTaskFormDataByExecutionId(String executionId){
+        Map<String,Object> map = runtimeService.getVariables(executionId);
+        return map;
+    }
+
+    /**
+     * 实名制审批
+     * @param approved 审批结果 "true"通过  "false"拒绝
+     */
+    public void approveRealName(String taskId,String approved){
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("approved",approved);
+        formService.submitTaskFormData(taskId,map);
+    }
+
 
 }
