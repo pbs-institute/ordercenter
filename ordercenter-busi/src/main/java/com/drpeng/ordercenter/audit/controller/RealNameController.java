@@ -1,10 +1,14 @@
 package com.drpeng.ordercenter.audit.controller;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import com.alibaba.fastjson.JSONObject;
+import com.drpeng.ordercenter.activiti.service.IActivitiBaseService;
+import jdk.internal.org.objectweb.asm.tree.analysis.Value;
+import org.activiti.engine.task.Task;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,14 +17,41 @@ import java.util.Map;
 @RestController
 @RequestMapping("/realNameReg")
 public class RealNameController {
-    @RequestMapping(method = RequestMethod.GET,consumes = "application/json")
-    public Map<String,Object> findRealNameMsgs(){
-
+    @Autowired
+    private IActivitiBaseService activitiBaseService;
+    @RequestMapping(value = "/d",method = RequestMethod.GET,consumes = "application/json")
+    public Map<String,Object> findRealNameMsgsd(@RequestParam(value="billId",required = false) String billId,@RequestParam(value="idNumber",required = false) String idNumber){
+        Map map = new HashMap();
+        if(billId != null && !billId.isEmpty())
+            map.put("bill_id",billId);
+        if(idNumber != null && !idNumber.isEmpty())
+            map.put("id_number",idNumber);
+        List<Task> taskList = activitiBaseService.qryTaskByValuelike(map,0,10);
         return null;
     }
-    @RequestMapping(value = "/{billId}/{idNumber}" ,method = RequestMethod.GET,consumes = "application/json")
-    public Map<String,Object> findRealNameMsg(@PathVariable String billId,@PathVariable String idNumber){
-
-        return null;
+    @RequestMapping(method = RequestMethod.GET,consumes = "application/json")
+    public String findRealNameMsgs(@RequestBody JSONObject jsonObject){
+        JSONObject rtnObj = new JSONObject();
+        String sEcho = null;
+        int iDisplayStart = 0; // 起始索引
+        int iDisplayLength = 0; // 每页显示的行数
+        Map map = new HashMap();
+        if(jsonObject.containsKey("sEcho"))
+            sEcho = jsonObject.getString("sEcho");
+        if(jsonObject.containsKey("iDisplayStart"))
+            iDisplayStart = jsonObject.getIntValue("iDisplayStart");
+        if(jsonObject.containsKey("iDisplayLength"))
+            iDisplayLength = jsonObject.getIntValue("iDisplayLength");
+        if(jsonObject.containsKey("billId"))
+            map.put("bill_id",jsonObject.get("billId"));
+        if(jsonObject.containsKey("idNumber"))
+            map.put("id_number",jsonObject.get("idNumber"));
+        long totalCount = activitiBaseService.countTaskByValueLike(map);
+        List<Task> taskList = activitiBaseService.qryTaskByValuelike(map,iDisplayStart,iDisplayLength);
+        rtnObj.put("sEcho",sEcho);
+        rtnObj.put("iTotalRecords",totalCount);
+        rtnObj.put("iTotalDisplayRecords",totalCount);
+        rtnObj.put("data",taskList);
+        return rtnObj.toString();
     }
 }
