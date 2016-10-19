@@ -1,7 +1,7 @@
 package com.drpeng.ordercenter.placeorder.processor.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.drpeng.ordercenter.activiti.service.ActivitiBaseService;
+import com.drpeng.ordercenter.activiti.service.IActivitiBaseService;
 import com.drpeng.ordercenter.persistence.entity.OrdDetail;
 import com.drpeng.ordercenter.persistence.entity.Order;
 import com.drpeng.ordercenter.persistence.mapper.OrdDetailMapper;
@@ -18,7 +18,7 @@ import java.util.Map;
  * Created by liurl3 on 2016/10/14.
  */
 public class RealNameAuthOrderProcessor extends AbstractOrderProcessorImpl{
-    private ActivitiBaseService activitiBaseService = (ActivitiBaseService)ApplicationContextHolder.getConext().getBean("activitiBaseService");
+    private IActivitiBaseService activitiBaseService = (IActivitiBaseService)ApplicationContextHolder.getConext().getBean("activitiBaseServiceImpl");
     private String billId = "";
     private String idNumber = "";
     private String name = "";

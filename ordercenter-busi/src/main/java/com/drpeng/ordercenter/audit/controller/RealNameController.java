@@ -18,7 +18,7 @@ public class RealNameController {
 
         return null;
     }
-    @RequestMapping(value = "/billId/idNumber" ,method = RequestMethod.GET,consumes = "application/json")
+    @RequestMapping(value = "/{billId}/{idNumber}" ,method = RequestMethod.GET,consumes = "application/json")
     public Map<String,Object> findRealNameMsg(@PathVariable String billId,@PathVariable String idNumber){
 
         return null;
