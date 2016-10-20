@@ -176,6 +176,7 @@ public class ProcessEngineAutoConfigurationTest {
             System.out.println("####################");
             System.out.println("taskId" + task.getId());
             Map<String, Object> map = activitiBaseService.qryTaskFormDataByExecutionId(task.getExecutionId());
+            map.put("taskId",task.getId());
             Object obj = JSONObject.toJSON(map);
             ordList.add(obj);
            /* for (String s : map.keySet()) {

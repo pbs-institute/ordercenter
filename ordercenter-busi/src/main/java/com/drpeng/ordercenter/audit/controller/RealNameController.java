@@ -52,6 +52,8 @@ public class RealNameController {
         List ordList = new ArrayList();
         for(Task task:taskList){
             Map ordMap = activitiBaseService.qryTaskFormDataByExecutionId(task.getExecutionId());
+            String taskId = task.getId();
+            ordMap.put("taskId",taskId);
             Object obj = JSONObject.toJSON(ordMap);
             ordList.add(obj);
         }
@@ -60,5 +62,19 @@ public class RealNameController {
         rtnObj.put("iTotalDisplayRecords",totalCount);
         rtnObj.put("data",ordList);
         return rtnObj.toString();
+    }
+    @RequestMapping(value="/approval",method = RequestMethod.POST,consumes = "application/json")
+    public Map<String,Object> approveRealName(@RequestParam(value ="approval") String approval,@RequestParam(value = "taskId") String taskId){
+        Map rtnMap = new HashMap();
+        activitiBaseService.approveRealName(taskId, approval);
+        String approvalTag = "";
+        if("true".equals(approval))
+            approvalTag="通过";
+        else
+            approvalTag="不通过";
+        rtnMap.put("message", "SUCCESS");
+        rtnMap.put("taskId",taskId);
+        rtnMap.put("result",approvalTag);
+        return rtnMap;
     }
 }
