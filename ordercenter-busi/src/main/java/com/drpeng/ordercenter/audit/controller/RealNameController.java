@@ -7,6 +7,7 @@ import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,11 +48,17 @@ public class RealNameController {
         if(jsonObject.containsKey("idNumber"))
             map.put("id_number",jsonObject.get("idNumber"));
         long totalCount = activitiBaseService.countTaskByValueLike(map);
-        List<Task> taskList = activitiBaseService.qryTaskByValuelike(map,iDisplayStart,iDisplayLength);
+        List<Task> taskList = activitiBaseService.qryTaskByValuelike(map, iDisplayStart, iDisplayLength);
+        List ordList = new ArrayList();
+        for(Task task:taskList){
+            Map ordMap = activitiBaseService.qryTaskFormDataByExecutionId(task.getExecutionId());
+            Object obj = JSONObject.toJSON(ordMap);
+            ordList.add(obj);
+        }
         rtnObj.put("sEcho",sEcho);
         rtnObj.put("iTotalRecords",totalCount);
         rtnObj.put("iTotalDisplayRecords",totalCount);
-        rtnObj.put("data",taskList);
+        rtnObj.put("data",ordList);
         return rtnObj.toString();
     }
 }

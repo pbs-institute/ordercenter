@@ -17,6 +17,7 @@
 package com.drpeng.ordercenter;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.drpeng.ordercenter.activiti.service.IActivitiBaseService;
 import com.drpeng.ordercenter.activiti.service.RealNameService;
 import org.activiti.engine.*;
@@ -33,6 +34,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -167,20 +169,28 @@ public class ProcessEngineAutoConfigurationTest {
         Map<String,String> kmap = new HashMap<String,String>();
         kmap.put("bill_id","16012312334");
         kmap.put("id_number","222111222333666");
-        List<Task> tasks = activitiBaseService.qryTaskByValuelike(kmap);
-
+        List<Task> tasks = activitiBaseService.qryTaskByValuelike(kmap,0,10);
+        List ordList = new ArrayList();
+        JSONObject rtnObj = new JSONObject();
         for (Task task : tasks) {
             System.out.println("####################");
             System.out.println("taskId" + task.getId());
             Map<String, Object> map = activitiBaseService.qryTaskFormDataByExecutionId(task.getExecutionId());
-            for (String s : map.keySet()) {
+            Object obj = JSONObject.toJSON(map);
+            ordList.add(obj);
+           /* for (String s : map.keySet()) {
                 System.out.println("key:" + s + " value:" + map.get(s));
-            }
+            }*/
 
 /*
             activitiBaseService.approveRealName(task.getId(), "true");
 */
         }
+        rtnObj.put("sEcho","22");
+        rtnObj.put("iTotalRecords",10);
+        rtnObj.put("iTotalDisplayRecords",10);
+        rtnObj.put("data",ordList);
+        System.out.println("==========rtnObj:" + rtnObj.toString());
     }
 
 
