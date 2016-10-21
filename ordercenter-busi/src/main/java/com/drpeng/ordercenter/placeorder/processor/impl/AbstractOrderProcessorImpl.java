@@ -29,7 +29,7 @@ public abstract class AbstractOrderProcessorImpl implements OrderProcessor {
             List<OrdOrder> ordOrders = this.spiltOrder(order);
             if (ordOrders != null) {
                 for (int i = 0; i < ordOrders.size(); i++) {
-                    this.verifyBusiness();
+                    this.verifyBusiAvailability();
                 }
             }
             this.calculatePrice();
@@ -77,7 +77,7 @@ public abstract class AbstractOrderProcessorImpl implements OrderProcessor {
             ordOrder.setDeliveryParty(1);
         return null;
     }
-    protected abstract Object verifyBusiness();
+    protected abstract Object verifyBusiAvailability();
 
     protected Object calculatePrice(){
         return null;
