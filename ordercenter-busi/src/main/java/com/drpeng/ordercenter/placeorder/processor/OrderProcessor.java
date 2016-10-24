@@ -8,6 +8,6 @@ import java.util.Map;
  * Created by liurl3 on 2016/10/14.
  */
 public interface OrderProcessor {
-    Map processor(JSONObject jsonObject);
+    Map process(JSONObject jsonObject);
 
 }

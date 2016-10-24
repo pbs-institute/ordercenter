@@ -34,10 +34,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Lifei
@@ -176,8 +173,10 @@ public class ProcessEngineAutoConfigurationTest {
             System.out.println("####################");
             System.out.println("taskId" + task.getId());
             Map<String, Object> map = activitiBaseService.qryTaskFormDataByExecutionId(task.getExecutionId());
-            map.put("taskId",task.getId());
-            Object obj = JSONObject.toJSON(map);
+            map.put("taskId", task.getId());
+            Collection values = map.values();
+            Object obj = JSONObject.toJSON(values);
+            System.out.println("=======value:" + values);
             ordList.add(obj);
            /* for (String s : map.keySet()) {
                 System.out.println("key:" + s + " value:" + map.get(s));

@@ -92,7 +92,7 @@ public class ActivitiBaseServiceImpl implements IActivitiBaseService {
         }
 
         //如果分页条件为空，则返回未分页列表，如果有可用的分页条件，返回分页列表
-        if (startIndex == 0 || maxResults == 0){
+        if (startIndex <0 || maxResults < 0){
             tasks = query.list();
         }else {
             tasks = query.listPage(startIndex,maxResults);
