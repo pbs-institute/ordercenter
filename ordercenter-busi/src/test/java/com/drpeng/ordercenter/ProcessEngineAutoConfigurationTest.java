@@ -164,6 +164,12 @@ public class ProcessEngineAutoConfigurationTest {
     }
 
     @Test
+    public void testCount(){
+        long count = activitiBaseService.countTaskByValueLike(null);
+        System.out.println(count);
+    }
+
+    @Test
     public void testTaskQryByValue() {
 
         Map<String,String> kmap = new HashMap<String,String>();
