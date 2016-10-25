@@ -52,7 +52,7 @@ public class RealNameAuthOrderProcessor extends AbstractOrderProcessorImpl{
     }
 
     @Override
-    public Object verifyBusiness() {
+    public Object verifyBusiAvailability() {
         return null;
     }
 
