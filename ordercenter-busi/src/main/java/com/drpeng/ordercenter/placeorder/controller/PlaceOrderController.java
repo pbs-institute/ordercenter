@@ -4,12 +4,8 @@ package com.drpeng.ordercenter.placeorder.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.drpeng.ordercenter.common.service.ICfgService;
 import com.drpeng.ordercenter.persistence.entity.CfgBusiness;
-import com.drpeng.ordercenter.persistence.mapper.OrdOrderMapper;
 import com.drpeng.ordercenter.placeorder.processor.impl.AbstractOrderProcessorImpl;
-import com.drpeng.ordercenter.placeorder.processor.impl.ApplicationContextHolder;
-import com.drpeng.ordercenter.placeorder.processor.impl.RealNameAuthOrderProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by liurl3 on 2016/10/12.
