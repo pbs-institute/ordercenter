@@ -110,7 +110,7 @@ public class ActivitiBaseServiceImpl implements IActivitiBaseService {
     public long countTaskByValueLike(Map<String,String> kvMap){
         TaskQuery query = taskService.createTaskQuery();
         //遍历查询条件，逐个添加到query中
-        if (kvMap != null || !kvMap.isEmpty()){
+        if (kvMap != null && !kvMap.isEmpty()){
             for (String key : kvMap.keySet()) {
                 query.processVariableValueLike(key,kvMap.get(key));
             }

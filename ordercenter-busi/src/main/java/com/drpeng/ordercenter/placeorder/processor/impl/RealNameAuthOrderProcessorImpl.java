@@ -4,10 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.drpeng.ordercenter.activiti.service.IActivitiBaseService;
 import com.drpeng.ordercenter.persistence.entity.OrdDetail;
 import com.drpeng.ordercenter.persistence.entity.Order;
-import com.drpeng.ordercenter.persistence.mapper.OrdDetailMapper;
-import com.drpeng.ordercenter.persistence.mapper.OrdOrderMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,7 +47,7 @@ public class RealNameAuthOrderProcessorImpl extends AbstractOrderProcessorImpl{
     }
 
     @Override
-    public Object verifyBusiness() {
+    public Object verifyBusiAvailability() {
         return null;
     }
 
