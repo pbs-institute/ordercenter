@@ -25,8 +25,8 @@ public class OrdercenterBusiApplicationTests {
 
 	@Test
 	public void testIdGenerator() {
-		long idNumber = idGeneratorService.getNextOrdNumber();
-		logger.debug("idNumber = " + idNumber);
+		String idNumber = idGeneratorService.getNextOrdNumber();
+		logger.info("idNumber = " + idNumber);
 	}
 
 }
