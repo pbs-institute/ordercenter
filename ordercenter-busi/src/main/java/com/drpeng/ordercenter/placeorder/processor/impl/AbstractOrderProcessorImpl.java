@@ -98,7 +98,7 @@ public abstract class AbstractOrderProcessorImpl implements OrderProcessor {
     protected abstract Map getStartWorkflowParam(Order order);
 
     protected void startWorkflow(Order order,Map map){
-        activitiBaseService.startProcessByBusi(order.getOrdOrder().getBusinessId(),order.getOrdOrder().getRegionId(),map);
+        activitiBaseService.startProcessByBusi(order.getOrdOrder().getBusinessId(),order.getOrdOrder().getCityId(),map);
     }
 
     private String getParamValueByKey(JSONObject jsonObject,String key,boolean isEmpty) throws Exception {
