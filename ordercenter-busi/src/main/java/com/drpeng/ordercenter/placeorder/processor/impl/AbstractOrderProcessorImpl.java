@@ -1,5 +1,6 @@
 package com.drpeng.ordercenter.placeorder.processor.impl;
 
+import com.drpeng.ordercenter.persistence.entity.OrdOrder;
 import com.drpeng.ordercenter.persistence.entity.Order;
 import com.drpeng.ordercenter.placeorder.processor.OrderProcessor;
 import com.alibaba.fastjson.JSONObject;
