@@ -12,6 +12,8 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.*;
 import java.io.*;
@@ -21,6 +23,8 @@ import java.util.Map;
  * Created by yuyang on 2016/10/26 0026.
  */
 public class HttpUtil {
+    private static Logger log = LoggerFactory.getLogger(HttpUtil.class);
+
     /**
      * 组装参数
      *
@@ -75,19 +79,19 @@ public class HttpUtil {
                 responseContent = EntityUtils.toString(entity, charset);
                 EntityUtils.consume(entity); // Consume response content
             }
-//            if (log.isDebugEnabled()) {
-//                log.debug("请求地址: " + httpPost.getURI() + "\r\n响应状态: "
-//                        + response.getStatusLine() + "\r\n响应长度: "
-//                        + responseLength + "\r\n响应内容: " + responseContent);
-//            }
+            if (log.isDebugEnabled()) {
+                log.debug("请求地址: " + httpPost.getURI() + "\r\n响应状态: "
+                        + response.getStatusLine() + "\r\n响应长度: "
+                        + responseLength + "\r\n响应内容: " + responseContent);
+            }
         } catch (UnsupportedEncodingException e) {
-//            log.error("请求出现异常", e);
+            log.error("请求出现异常", e);
             throw new Exception(e.getMessage(), e);
         } catch (ClientProtocolException e) {
-//            log.error("请求出现异常", e);
+            log.error("请求出现异常", e);
             throw new Exception(e.getMessage(), e);
         } catch (IOException e) {
-//            log.error("请求出现异常", e);
+            log.error("请求出现异常", e);
             throw new Exception(e.getMessage(), e);
         }
         return (Map) JSONObject.parseObject(responseContent);
@@ -108,7 +112,7 @@ public class HttpUtil {
         }
         String urlParam= getParam(param);
         url= url+"?"+urlParam;
-//        log.info("http get请求开始，请求URL:[" + url + "]");
+        log.info("http get请求开始，请求URL:[" + url + "]");
         long responseLength = 0; // 响应长度
         String responseContent = null; // 响应内容
         HttpClient httpClient = new DefaultHttpClient(); // 创建默认的httpClient实例
@@ -124,19 +128,19 @@ public class HttpUtil {
                 responseContent = EntityUtils.toString(entity, charset);
                 EntityUtils.consume(entity); // Consume response content
             }
-//            if (log.isDebugEnabled()) {
-//                log.debug("请求地址: " + httpGet.getURI() + "\r\n响应状态: "
-//                        + response.getStatusLine() + "\r\n响应长度: "
-//                        + responseLength + "\r\n响应内容: " + responseContent);
-//            }
+            if (log.isDebugEnabled()) {
+                log.debug("请求地址: " + httpGet.getURI() + "\r\n响应状态: "
+                        + response.getStatusLine() + "\r\n响应长度: "
+                        + responseLength + "\r\n响应内容: " + responseContent);
+            }
         } catch (UnsupportedEncodingException e) {
-//            log.error("请求出现异常", e);
+            log.error("请求出现异常", e);
             throw new Exception(e.getMessage(), e);
         } catch (ClientProtocolException e) {
-//            log.error("请求出现异常", e);
+            log.error("请求出现异常", e);
             throw new Exception(e.getMessage(), e);
         } catch (IOException e) {
-//            log.error("请求出现异常", e);
+            log.error("请求出现异常", e);
             throw new Exception(e.getMessage(), e);
         }
         return (Map) JSONObject.parseObject(responseContent);
