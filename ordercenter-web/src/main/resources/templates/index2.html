@@ -1,0 +1,249 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link rel="stylesheet" th:href="@{assets/css/bootstrap.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/font-awesome.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/jquery-ui.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/bootstrap-datepicker3.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/ui.jqgrid.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/ace-fonts.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/ace.css}" class="ace-main-stylesheet" id="main-ace-style" />
+    <!---->
+    <script th:src="@{assets/js/ace-extra.js}"></script>
+    <script th:src="@{assets/js/jquery/jquery-1.8.3.min.js}"></script>
+</head>
+<body class="no-skin">
+<div id="navbar" class="navbar navbar-default">
+    <script type="text/javascript">
+        try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+    </script>
+
+    <div class="navbar-container" id="navbar-container">
+        <!-- #section:basics/sidebar.mobile.toggle -->
+        logo
+        <!-- /section:basics/sidebar.mobile.toggle -->
+
+
+        <!-- #section:basics/navbar.dropdown -->
+        <div class="navbar-buttons navbar-header pull-right" role="navigation">
+            logo右侧
+        </div>
+
+        <!-- /section:basics/navbar.dropdown -->
+    </div><!-- /.navbar-container -->
+</div>
+<div class="main-container" id="main-container">
+    <div id="sidebar" class="sidebar                  responsive">
+        <ul class="nav nav-list">左侧栏</ul>
+    </div>
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    导航栏
+                </ul>
+            </div>
+            <div class="page-content">
+                <div class="page-header">
+                    <h1>
+                        <div class="widget-box">
+                            <div class="widget-header">
+                                <h4 class="widget-title">查询条件</h4>
+                            </div>
+                            <div class="widget-main">
+                                <table>
+                                    <tr>
+                                        <td> 手机号：</td>
+                                        <td><input type="text" id="billid" placeholder="手机号"/></td>
+                                        <td> 证件号码：</td>
+                                        <td><input type="text" id="certcode" placeholder="证件号码"/></td>
+                                        <td>
+                                            &nbsp; &nbsp; &nbsp;
+                                            <button class="btn btn-primary btn-sm" type="button" onclick="getData()"><i
+                                                    class="fa fa-search"></i>
+                                                查询
+                                            </button>
+                                            &nbsp; &nbsp; &nbsp;
+                                            <button type="reset" class="btn btn-default btn-sm"><i
+                                                    class="fa fa-repeat"></i>
+                                                重置
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </h1>
+                </div><!-- /.page-header -->
+                <div class="row">
+                    <div class="col-xs-12">
+
+                        <table class="table table-striped" id="jqgrid"></table>
+
+                        <div id="gridPager"></div>
+
+                    </div><!-- /.col -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="footer-inner">
+            <!-- #section:basics/footer -->
+            <div class="footer-content">
+						<span class="bigger-120">
+							<span class="blue bolder">Ace</span>
+							Application &copy; 2013-2014
+						</span>
+
+                &nbsp; &nbsp;
+                <span class="action-buttons">
+							<a href="#">
+								<i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
+							</a>
+
+							<a href="#">
+								<i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>
+							</a>
+
+							<a href="#">
+								<i class="ace-icon fa fa-rss-square orange bigger-150"></i>
+							</a>
+						</span>
+            </div>
+
+            <!-- /section:basics/footer -->
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script th:src="@{assets/js/date-time/bootstrap-datepicker.js}"></script>
+<script th:src="@{assets/js/date-time/moment.js}"></script>
+<script th:src="@{assets/js/date-time/daterangepicker.js}"></script>
+<script th:src="@{assets/js/jqGrid/jquery.jqGrid.js}"></script>
+<script th:src="@{assets/js/jqGrid/i18n/grid.locale-en.js}"></script>
+
+<!-- inline scripts related to this page -->
+<!--Datatables.ajax.url(url).load();-->
+<script type="text/javascript">
+    var billid = $("#billid").val();
+    var certcode = $("#certcode").val();
+    $("#jqgrid").jqGrid({
+        datatype: "json", //将这里改为使用JSON数据
+//        url:'http://localhost:9090/realNameReg/findRealNameMsgs',
+        url:'/getData',
+        postData:{ "billId": billid, "certCode": certcode},
+        height:  300,
+//        width:  $(window).width() - 130,
+        autowidth:true,
+        colNames:['TaskID','订单编号','用户名', '手机号', '证件号码','背面照','正面照','手持照','操作'],
+        colModel:[
+            {name:'taskId',index:'orderNum',hidden:true},
+            {name:'orderNum',index:'orderNum',width:200 },
+            {name:'name',index:'orderNum',width:200 },
+            {name:'billId',index:'orderNum',width:200 },
+            {name:'certCode',index:'billId',width:200},
+            {name:'backSidePhoto',index:'state',hidden:true},
+            {name:'frontSidePhoto',index:'certCode',hidden:true},
+            {name:'handHeldPhoto',index:'certCode',hidden:true},
+            {
+                name: 'flag', index: 'flag', width: 200, align: 'center',
+                formatter: function (cellvalue, options, rowObject) {
+                    var taskId=rowObject["taskId"];
+                    var frontSidePhoto=rowObject["frontSidePhoto"];
+                    var backSidePhoto=rowObject["backSidePhoto"];
+                    var handHeldPhoto=rowObject["handHeldPhoto"];
+                    var flag=taskId+','+frontSidePhoto+','+backSidePhoto+','+handHeldPhoto;
+                    return '<button class="btn btn-success" onclick="agree(\''+flag+'\')">同&nbsp; &nbsp;意</button>' +
+                            ' &nbsp; &nbsp; &nbsp;<button class="btn btn-danger" onclick="agree(\''+flag+'\')">不同意</button>';
+                }
+            }
+        ],
+        sortname:'orderNum',
+        sortorder:'asc',
+        viewrecords:true,
+        rowNum:10,
+        pager : "#gridPager",
+        pgtext : "第 {0} 页，一共 {1} 页",
+        recordtext: "",
+        pgbuttons:true,
+        multiboxonly: true,
+
+        loadComplete : function() {
+            var table = this;
+            setTimeout(function(){
+//                styleCheckbox(table);
+
+//                updateActionIcons(table);
+                updatePagerIcons(table);//翻页按钮CSS设置
+//                enableTooltips(table);
+            }, 0);
+        },
+
+        onSelectRow: function(id) {
+
+        }
+
+    });
+    function getData() {
+        var billId = $("#billid").val();
+        var certCode = $("#certcode").val();
+        $("#jqgrid").jqGrid('setGridParam',{
+            postData:{"billId":billId,"certCode":certCode},
+        }).trigger('reloadGrid');
+    }
+    function agree(data){
+        var taskId=data.split(",")[0];
+        $.ajax({
+            "type": "post",
+            "url": "http://localhost:9090/realNameReg/approval",
+            "data": {
+                "approval":true,
+                "taskId":taskId
+            },
+            "success": function (result) {
+                $('#dataTables').dataTable(result.dataList)
+            }
+        })
+    }
+    function noAgree(data){
+        var taskId=data.split(",")[0];
+        $.ajax({
+            "type": "post",
+            "url": "http://localhost:9090/realNameReg/approval",
+            "data": {
+                "approval":false,
+                "taskId":taskId
+            },
+            "success": function (result) {
+                $('#dataTables').dataTable(result.dataList)
+            }
+        })
+    }
+    function updatePagerIcons(table) {
+        var replacement =
+        {
+            'ui-icon-seek-first' : 'ace-icon fa fa-angle-double-left bigger-140',
+            'ui-icon-seek-prev' : 'ace-icon fa fa-angle-left bigger-140',
+            'ui-icon-seek-next' : 'ace-icon fa fa-angle-right bigger-140',
+            'ui-icon-seek-end' : 'ace-icon fa fa-angle-double-right bigger-140'
+        };
+        $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+            var icon = $(this);
+            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+
+            if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+        })
+    }
+
+</script>
+</body>
+</html>
