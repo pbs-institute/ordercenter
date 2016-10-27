@@ -80,9 +80,14 @@ public class ActivitiBaseServiceImpl implements IActivitiBaseService {
      * @param startIndex 初始索引
      * @param maxResults 查出来的最大数量
      */
-    public List<Task> qryTaskByValuelike(Map<String,String> kvMap,int startIndex,int maxResults){
+    public List<Task> qryTaskByValuelike(Map<String,String> kvMap, int businessId,int startIndex,int maxResults){
         TaskQuery query = taskService.createTaskQuery();
         List<Task> tasks = null;
+        //业务编码
+        if (businessId != 0){
+            query.processInstanceBusinessKey(String.valueOf(businessId));
+        }
+
         //遍历查询条件，逐个添加到query中
         if (kvMap != null || !kvMap.isEmpty()){
             for (String key : kvMap.keySet()) {
@@ -107,8 +112,12 @@ public class ActivitiBaseServiceImpl implements IActivitiBaseService {
      * @param kvMap
      * @return
      */
-    public long countTaskByValueLike(Map<String,String> kvMap){
+    public long countTaskByValueLike(Map<String,String> kvMap, int businessId){
         TaskQuery query = taskService.createTaskQuery();
+        //业务编码
+        if (businessId != 0){
+            query.processInstanceBusinessKey(String.valueOf(businessId));
+        }
         //遍历查询条件，逐个添加到query中
         if (kvMap != null && !kvMap.isEmpty()){
             for (String key : kvMap.keySet()) {
