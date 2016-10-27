@@ -1,11 +1,8 @@
 package com.drpeng.ordercenter.persistence.entity;
 
-import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 
 public class OrdOrderExample {
     /**
@@ -958,73 +955,253 @@ public class OrdOrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andRegionIdIsNull() {
-            addCriterion("region_id is null");
+        public Criteria andCityIdIsNull() {
+            addCriterion("city_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andRegionIdIsNotNull() {
-            addCriterion("region_id is not null");
+        public Criteria andCityIdIsNotNull() {
+            addCriterion("city_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andRegionIdEqualTo(String value) {
-            addCriterion("region_id =", value, "regionId");
+        public Criteria andCityIdEqualTo(String value) {
+            addCriterion("city_id =", value, "cityId");
             return (Criteria) this;
         }
 
-        public Criteria andRegionIdNotEqualTo(String value) {
-            addCriterion("region_id <>", value, "regionId");
+        public Criteria andCityIdNotEqualTo(String value) {
+            addCriterion("city_id <>", value, "cityId");
             return (Criteria) this;
         }
 
-        public Criteria andRegionIdGreaterThan(String value) {
-            addCriterion("region_id >", value, "regionId");
+        public Criteria andCityIdGreaterThan(String value) {
+            addCriterion("city_id >", value, "cityId");
             return (Criteria) this;
         }
 
-        public Criteria andRegionIdGreaterThanOrEqualTo(String value) {
-            addCriterion("region_id >=", value, "regionId");
+        public Criteria andCityIdGreaterThanOrEqualTo(String value) {
+            addCriterion("city_id >=", value, "cityId");
             return (Criteria) this;
         }
 
-        public Criteria andRegionIdLessThan(String value) {
-            addCriterion("region_id <", value, "regionId");
+        public Criteria andCityIdLessThan(String value) {
+            addCriterion("city_id <", value, "cityId");
             return (Criteria) this;
         }
 
-        public Criteria andRegionIdLessThanOrEqualTo(String value) {
-            addCriterion("region_id <=", value, "regionId");
+        public Criteria andCityIdLessThanOrEqualTo(String value) {
+            addCriterion("city_id <=", value, "cityId");
             return (Criteria) this;
         }
 
-        public Criteria andRegionIdLike(String value) {
-            addCriterion("region_id like", value, "regionId");
+        public Criteria andCityIdLike(String value) {
+            addCriterion("city_id like", value, "cityId");
             return (Criteria) this;
         }
 
-        public Criteria andRegionIdNotLike(String value) {
-            addCriterion("region_id not like", value, "regionId");
+        public Criteria andCityIdNotLike(String value) {
+            addCriterion("city_id not like", value, "cityId");
             return (Criteria) this;
         }
 
-        public Criteria andRegionIdIn(List<String> values) {
-            addCriterion("region_id in", values, "regionId");
+        public Criteria andCityIdIn(List<String> values) {
+            addCriterion("city_id in", values, "cityId");
             return (Criteria) this;
         }
 
-        public Criteria andRegionIdNotIn(List<String> values) {
-            addCriterion("region_id not in", values, "regionId");
+        public Criteria andCityIdNotIn(List<String> values) {
+            addCriterion("city_id not in", values, "cityId");
             return (Criteria) this;
         }
 
-        public Criteria andRegionIdBetween(String value1, String value2) {
-            addCriterion("region_id between", value1, value2, "regionId");
+        public Criteria andCityIdBetween(String value1, String value2) {
+            addCriterion("city_id between", value1, value2, "cityId");
             return (Criteria) this;
         }
 
-        public Criteria andRegionIdNotBetween(String value1, String value2) {
-            addCriterion("region_id not between", value1, value2, "regionId");
+        public Criteria andCityIdNotBetween(String value1, String value2) {
+            addCriterion("city_id not between", value1, value2, "cityId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBranchIdIsNull() {
+            addCriterion("branch_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBranchIdIsNotNull() {
+            addCriterion("branch_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBranchIdEqualTo(Long value) {
+            addCriterion("branch_id =", value, "branchId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBranchIdNotEqualTo(Long value) {
+            addCriterion("branch_id <>", value, "branchId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBranchIdGreaterThan(Long value) {
+            addCriterion("branch_id >", value, "branchId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBranchIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("branch_id >=", value, "branchId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBranchIdLessThan(Long value) {
+            addCriterion("branch_id <", value, "branchId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBranchIdLessThanOrEqualTo(Long value) {
+            addCriterion("branch_id <=", value, "branchId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBranchIdIn(List<Long> values) {
+            addCriterion("branch_id in", values, "branchId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBranchIdNotIn(List<Long> values) {
+            addCriterion("branch_id not in", values, "branchId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBranchIdBetween(Long value1, Long value2) {
+            addCriterion("branch_id between", value1, value2, "branchId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBranchIdNotBetween(Long value1, Long value2) {
+            addCriterion("branch_id not between", value1, value2, "branchId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorIdIsNull() {
+            addCriterion("operator_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorIdIsNotNull() {
+            addCriterion("operator_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorIdEqualTo(Long value) {
+            addCriterion("operator_id =", value, "operatorId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorIdNotEqualTo(Long value) {
+            addCriterion("operator_id <>", value, "operatorId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorIdGreaterThan(Long value) {
+            addCriterion("operator_id >", value, "operatorId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("operator_id >=", value, "operatorId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorIdLessThan(Long value) {
+            addCriterion("operator_id <", value, "operatorId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorIdLessThanOrEqualTo(Long value) {
+            addCriterion("operator_id <=", value, "operatorId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorIdIn(List<Long> values) {
+            addCriterion("operator_id in", values, "operatorId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorIdNotIn(List<Long> values) {
+            addCriterion("operator_id not in", values, "operatorId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorIdBetween(Long value1, Long value2) {
+            addCriterion("operator_id between", value1, value2, "operatorId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperatorIdNotBetween(Long value1, Long value2) {
+            addCriterion("operator_id not between", value1, value2, "operatorId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdIsNull() {
+            addCriterion("organization_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdIsNotNull() {
+            addCriterion("organization_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdEqualTo(Long value) {
+            addCriterion("organization_id =", value, "organizationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdNotEqualTo(Long value) {
+            addCriterion("organization_id <>", value, "organizationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdGreaterThan(Long value) {
+            addCriterion("organization_id >", value, "organizationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("organization_id >=", value, "organizationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdLessThan(Long value) {
+            addCriterion("organization_id <", value, "organizationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdLessThanOrEqualTo(Long value) {
+            addCriterion("organization_id <=", value, "organizationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdIn(List<Long> values) {
+            addCriterion("organization_id in", values, "organizationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdNotIn(List<Long> values) {
+            addCriterion("organization_id not in", values, "organizationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdBetween(Long value1, Long value2) {
+            addCriterion("organization_id between", value1, value2, "organizationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdNotBetween(Long value1, Long value2) {
+            addCriterion("organization_id not between", value1, value2, "organizationId");
             return (Criteria) this;
         }
 

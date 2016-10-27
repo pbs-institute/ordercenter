@@ -1,5 +1,6 @@
 package com.drpeng.ordercenter.placeorder.processor.impl;
 
+import com.drpeng.ordercenter.activiti.service.IActivitiBaseService;
 import com.drpeng.ordercenter.persistence.entity.OrdOrder;
 import com.drpeng.ordercenter.persistence.entity.Order;
 import com.drpeng.ordercenter.placeorder.processor.OrderProcessor;
@@ -14,8 +15,9 @@ public abstract class AbstractOrderProcessorImpl implements OrderProcessor {
     protected Order order = new Order();
     protected List<Order> subOrders = new ArrayList<Order>();
     protected IPlaceOrderService placeOrderService = (IPlaceOrderService)ApplicationContextHolder.getConext().getBean("placeOrderServiceImpl");
+    private IActivitiBaseService activitiBaseService = (IActivitiBaseService)ApplicationContextHolder.getConext().getBean("activitiBaseServiceImpl");
     @Override
-    public Map processor(JSONObject jsonObject){
+    public Map process(JSONObject jsonObject){
         Map map = new HashMap();
         try {
             this.parseBasicParam(jsonObject);
@@ -34,7 +36,8 @@ public abstract class AbstractOrderProcessorImpl implements OrderProcessor {
             }
             this.calculatePrice();
             this.saveOrder(order, subOrders);
-            this.startWorkflow(order);
+            Map paramMap = this.getStartWorkflowParam(order);
+            this.startWorkflow(order,paramMap);
         }catch (Exception e){
             map.put("return_code","SUCCESS");
             map.put("result_code","FAIL");
@@ -92,7 +95,11 @@ public abstract class AbstractOrderProcessorImpl implements OrderProcessor {
         }
     }
 
-    protected abstract void startWorkflow(Order order);
+    protected abstract Map getStartWorkflowParam(Order order);
+
+    protected void startWorkflow(Order order,Map map){
+        activitiBaseService.startProcessByBusi(order.getOrdOrder().getBusinessId(),order.getOrdOrder().getCityId(),map);
+    }
 
     private String getParamValueByKey(JSONObject jsonObject,String key,boolean isEmpty) throws Exception {
         Object obj = jsonObject.get(key);
