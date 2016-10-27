@@ -19,7 +19,7 @@ import java.util.Map;
 @Transactional
 public class PlaceOrderServiceImpl implements IPlaceOrderService {
     @Autowired
-    private  OrdOrderMapper ordOrderMapper;
+    private OrdOrderMapper ordOrderMapper;
     @Autowired
     private OrdDetailMapper ordDetailMapper;
 

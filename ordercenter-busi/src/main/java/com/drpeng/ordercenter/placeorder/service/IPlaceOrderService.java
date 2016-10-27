@@ -1,5 +1,4 @@
 package com.drpeng.ordercenter.placeorder.service;
-import com.drpeng.ordercenter.persistence.entity.OrdOrder;
 import com.drpeng.ordercenter.persistence.entity.Order;
 
 /**

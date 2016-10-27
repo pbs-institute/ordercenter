@@ -162,7 +162,7 @@
         $("#dataTables").dataTable({
             "bProcessing": false, // 是否显示取数据时的那个等待提示
             "bServerSide": true,//这个用来指明是通过服务端来取数据
-            "sAjaxSource": "/getData",//这个是请求的地址
+            "sAjaxSource": "http://localhost:9090/realNameReg/d",//这个是请求的地址
             "bPaginate": true, //翻页功能
             "bLengthChange": true, //改变每页显示数据数量
             "bFilter": true, //过滤功能
@@ -235,17 +235,20 @@
         var certcode = $("#certcode").val();
         $.ajax({
             url: sSource111,//这个就是请求地址对应sAjaxSource
-            data: {
-                "pam": JSON.stringify(aoData111),
-                "billId": billid, "certCode": certcode
-            },//这个是把datatable的一些基本数据传给后台,比如起始位置,每页显示的行数
-            type: 'post',
+            data: {},//这个是把datatable的一些基本数据传给后台,比如起始位置,每页显示的行数
+            type: 'get',
             dataType: 'json',
             async: false,
             success: function (result) {
+               // alert(result);
                 fnCallback111(result);//把返回的数据传给这个方法就可以了,datatable会自动绑定数据的
-            }
-        });
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                alert(XMLHttpRequest.readyState);
+                alert(XMLHttpRequest.status);
+                alert(textStatus);
+        }
+    });
     }
 
 

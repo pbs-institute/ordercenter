@@ -7,10 +7,7 @@ import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by liurl3 on 2016/10/19.
@@ -20,17 +17,37 @@ import java.util.Map;
 public class RealNameController {
     @Autowired
     private IActivitiBaseService activitiBaseService;
-    @RequestMapping(value = "/d",method = RequestMethod.GET,consumes = "application/json")
-    public Map<String,Object> findRealNameMsgsd(@RequestParam(value="billId",required = false) String billId,@RequestParam(value="idNumber",required = false) String idNumber){
+    @RequestMapping(value = "/d",method = RequestMethod.GET)
+    public String findRealNameMsgsd(@RequestParam(value="billId",required = false) String billId,@RequestParam(value="idNumber",required = false) String idNumber){
         Map map = new HashMap();
+        JSONObject rtnObj = new JSONObject();
+        String sEcho = null;
+        int iDisplayStart = 0; // 起始索引
+        int iDisplayLength = 10; // 每页显示的行数
         if(billId != null && !billId.isEmpty())
             map.put("bill_id",billId);
         if(idNumber != null && !idNumber.isEmpty())
             map.put("id_number",idNumber);
-        List<Task> taskList = activitiBaseService.qryTaskByValuelike(map,0,10);
-        return null;
+        long totalCount = activitiBaseService.countTaskByValueLike(map);
+        List<Task> taskList = activitiBaseService.qryTaskByValuelike(map, iDisplayStart, iDisplayLength);
+        List ordList = new ArrayList();
+        for(Task task:taskList){
+            Map ordMap = activitiBaseService.qryTaskFormDataByExecutionId(task.getExecutionId());
+            String taskId = task.getId();
+            ordMap.put("taskId", taskId);
+            Collection values = ordMap.values();
+            Object obj = JSONObject.toJSON(ordMap);
+            ordList.add(values);
+           // String[] or = { "1709085111", "qqqqqqqqqqq" ,"asdf","反面","正面","手持","EWQREQWERQWERQWERQEWRQ"};
+           // ordList.add(or);
+        }
+        rtnObj.put("sEcho",sEcho);
+        rtnObj.put("iTotalRecords",totalCount);
+        rtnObj.put("iTotalDisplayRecords",totalCount);
+        rtnObj.put("data",ordList);
+        return rtnObj.toString();
     }
-    @RequestMapping(method = RequestMethod.GET,consumes = "application/json")
+    @RequestMapping(method = RequestMethod.GET)
     public String findRealNameMsgs(@RequestBody JSONObject jsonObject){
         JSONObject rtnObj = new JSONObject();
         String sEcho = null;
@@ -53,9 +70,10 @@ public class RealNameController {
         for(Task task:taskList){
             Map ordMap = activitiBaseService.qryTaskFormDataByExecutionId(task.getExecutionId());
             String taskId = task.getId();
-            ordMap.put("taskId",taskId);
+            ordMap.put("taskId", taskId);
+            Collection values = ordMap.values();
             Object obj = JSONObject.toJSON(ordMap);
-            ordList.add(obj);
+            ordList.add(values);
         }
         rtnObj.put("sEcho",sEcho);
         rtnObj.put("iTotalRecords",totalCount);

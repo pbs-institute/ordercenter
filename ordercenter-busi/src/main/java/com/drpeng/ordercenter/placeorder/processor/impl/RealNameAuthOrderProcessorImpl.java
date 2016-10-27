@@ -4,10 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.drpeng.ordercenter.activiti.service.IActivitiBaseService;
 import com.drpeng.ordercenter.persistence.entity.OrdDetail;
 import com.drpeng.ordercenter.persistence.entity.Order;
-import com.drpeng.ordercenter.persistence.mapper.OrdDetailMapper;
-import com.drpeng.ordercenter.persistence.mapper.OrdOrderMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,8 +13,7 @@ import java.util.Map;
 /**
  * Created by liurl3 on 2016/10/14.
  */
-public class RealNameAuthOrderProcessor extends AbstractOrderProcessorImpl{
-    private IActivitiBaseService activitiBaseService = (IActivitiBaseService)ApplicationContextHolder.getConext().getBean("activitiBaseServiceImpl");
+public class RealNameAuthOrderProcessorImpl extends AbstractOrderProcessorImpl{
     private String billId = "";
     private String idNumber = "";
     private String name = "";
@@ -57,7 +52,7 @@ public class RealNameAuthOrderProcessor extends AbstractOrderProcessorImpl{
     }
 
     @Override
-    protected void startWorkflow(Order order) {
+    protected Map getStartWorkflowParam(Order order) {
         Map map = new HashMap();
         map.put("bill_id",billId);
         map.put("id_number",idNumber);
@@ -65,9 +60,10 @@ public class RealNameAuthOrderProcessor extends AbstractOrderProcessorImpl{
         map.put("front_side_photo",frontSidePhoto);
         map.put("back_side_photo",backSidePhoto);
         map.put("hand_held_photo",handHeldPhoto);
-        map.put("ord_order_id",order.getOrdOrder().getOrderId());
-        activitiBaseService.startProcessByBusi(order.getOrdOrder().getBusinessId(),null,map);
+        map.put("ord_order_id", order.getOrdOrder().getOrderId());
+        return map;
     }
+
 
     private OrdDetail transform(JSONObject jsonObject,String paramKey,boolean isEmpty) throws Exception {
         Object backSidePhotoObj = jsonObject.get(paramKey);
