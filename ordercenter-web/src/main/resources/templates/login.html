@@ -1,0 +1,88 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="description" content="User login page" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link rel="stylesheet" th:href="@{assets/css/bootstrap.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/font-awesome.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/jquery-ui.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/bootstrap-datepicker3.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/ui.jqgrid.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/ace-fonts.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/ace-rtl.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/ace.css}" class="ace-main-stylesheet" id="main-ace-style" />
+    <!---->
+    <script th:src="@{assets/js/ace-extra.js}"></script>
+    <script th:src="@{assets/js/jquery/jquery-1.8.3.min.js}"></script>
+</head>
+<body class="login-layout">
+<div class="main-container">
+    <div class="main-content">
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <div class="login-container">
+                    <div class="center">
+                        <h1>
+                            <i class="ace-icon fa fa-leaf green"></i>
+                            <span class="red">订单中心</span>
+                            <span class="white" id="id-text2">登录</span>
+                        </h1>
+                    </div>
+                    <div class="space-6"></div>
+                    <div class="position-relative">
+                        <div id="login-box" class="login-box visible widget-box no-border">
+                            <div class="widget-body">
+                                <div class="widget-main">
+                                    <h4 class="header blue lighter bigger">
+                                        <i class="ace-icon fa fa-coffee green"></i>
+                                        请输入登录信息
+                                    </h4>
+                                    <div class="space-6"></div>
+                                    <form>
+                                        <fieldset>
+                                            <label class="block clearfix">
+                                                <span class="block input-icon input-icon-right">
+                                                    <input type="text" class="form-control" placeholder="账户" />
+                                                    <i class="ace-icon fa fa-user"></i>
+                                                </span>
+                                            </label>
+                                            <label class="block clearfix">
+                                                <span class="block input-icon input-icon-right">
+                                                    <input type="password" class="form-control" placeholder="密码" />
+                                                    <i class="ace-icon fa fa-lock"></i>
+                                                </span>
+                                            </label>
+                                            <div class="space"></div>
+                                            <div class="clearfix">
+                                                <button type="button" onclick="login()" class="width-35 pull-right btn btn-sm btn-primary">
+                                                    <i class="ace-icon fa fa-key"></i>
+                                                    <span class="bigger-110">登录</span>
+                                                </button>
+                                            </div>
+                                            <div class="space-4"></div>
+                                        </fieldset>
+                                    </form>
+                                    <div class="space-6"></div>
+                                </div><!-- /.widget-main -->
+                            </div><!-- /.widget-body -->
+                        </div><!-- /.login-box -->
+                    </div><!-- /.position-relative -->
+                </div>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.main-content -->
+</div><!-- /.main-container -->
+
+<!-- basic scripts -->
+<script type="text/javascript">
+    function login() {
+        window.open("menu.html");
+        window.close();
+    }
+</script>
+
+
+</body>
+</html>

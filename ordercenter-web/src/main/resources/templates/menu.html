@@ -1,0 +1,104 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link rel="stylesheet" th:href="@{assets/css/bootstrap.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/font-awesome.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/jquery-ui.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/bootstrap-datepicker3.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/ui.jqgrid.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/ace-fonts.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/ace.css}" class="ace-main-stylesheet" id="main-ace-style" />
+    <!---->
+    <script th:src="@{assets/js/ace-extra.js}"></script>
+    <script th:src="@{assets/js/jquery/jquery-1.8.3.min.js}"></script>
+</head>
+<body class="no-skin">
+    <div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+    </script>
+
+    <div id="sidebar" class="sidebar      h-sidebar                navbar-collapse collapse">
+        <script type="text/javascript">
+            try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+        </script>
+
+        <ul class="nav nav-list">
+            <li class="hover">
+                <a href="#" onclick="getIframeHtml('REALNAME')">
+                    <i class="menu-icon fa fa-tachometer"></i>
+                    <span class="menu-text"> <strong>实名制审批</strong> </span>
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+            <li class="hover">
+                <a href="#" onclick="getIframeHtml('REALNAME')">
+                    <i class="menu-icon fa fa-tachometer"></i>
+                    <span class="menu-text"> <strong>反档激活</strong> </span>
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+            <li class="hover">
+                <a href="#" onclick="getIframeHtml('REALNAME')">
+                    <i class="menu-icon fa fa-tachometer"></i>
+                    <span class="menu-text"> <strong>下单 </strong></span>
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+            <li class="hover">
+                <a href="#" onclick="getIframeHtml('REALNAME')">
+                    <i class="menu-icon fa fa-tachometer"></i>
+                    <span class="menu-text"><strong> 实名制审批1</strong> </span>
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+            <li class="hover">
+                <a href="#" onclick="getIframeHtml('REALNAME')">
+                    <i class="menu-icon fa fa-tachometer"></i>
+                    <span class="menu-text"><strong> 实名制审批2 </strong></span>
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+        </ul>
+        <script type="text/javascript">
+            try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+        </script>
+    </div>
+
+    <!-- /section:basics/sidebar.horizontal -->
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="page-content">
+                <iframe id="iframeH"  frameborder="0"   height="100%"   width="100%"></iframe>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script th:src="@{assets/js/date-time/bootstrap-datepicker.js}"></script>
+<script th:src="@{assets/js/date-time/moment.js}"></script>
+<script th:src="@{assets/js/date-time/daterangepicker.js}"></script>
+<script th:src="@{assets/js/jqGrid/jquery.jqGrid.js}"></script>
+<script th:src="@{assets/js/jqGrid/i18n/grid.locale-en.js}"></script>
+
+<!-- inline scripts related to this page -->
+<!--Datatables.ajax.url(url).load();-->
+<script type="text/javascript">
+function getIframeHtml(flag) {
+    if(flag=="REALNAME"){
+        document.getElementById("iframeH").src="index.html";
+    }
+}
+</script>
+</body>
+</html>

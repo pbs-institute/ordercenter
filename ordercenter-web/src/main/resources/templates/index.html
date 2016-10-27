@@ -4,119 +4,57 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <link rel="stylesheet" th:href="@{assets/css/bootstrap.css}"/>
-    <link rel="stylesheet" th:href="@{assets/css/font-awesome.css}"/>
-
-    <link rel="stylesheet" th:href="@{assets/css/jquery-ui.css}"/>
-    <link rel="stylesheet" th:href="@{assets/css/ui.jqgrid.css}"/>
-    <link rel="stylesheet" th:href="@{assets/css/ace.css}" class="ace-main-stylesheet" id="main-ace-style"/>
+    <link rel="stylesheet" th:href="@{assets/css/bootstrap.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/font-awesome.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/jquery-ui.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/bootstrap-datepicker3.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/ui.jqgrid.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/ace-fonts.css}" />
+    <link rel="stylesheet" th:href="@{assets/css/ace.css}" class="ace-main-stylesheet" id="main-ace-style" />
+    <!---->
     <script th:src="@{assets/js/ace-extra.js}"></script>
     <script th:src="@{assets/js/jquery/jquery-1.8.3.min.js}"></script>
-    <script th:src="@{assets/js/teninedialog.js}"></script>
 </head>
 <body class="no-skin">
-<div class="widget-box">
-    <div class="widget-header">
-        <h4 class="widget-title">查询条件</h4>
-    </div>
-    <div class="widget-main">
-        <table>
-            <tr>
-                <td> 手机号：</td>
-                <td><input type="text" id="billid" placeholder="手机号"/></td>
-                <td> 证件号码：</td>
-                <td><input type="text" id="certcode" placeholder="证件号码"/></td>
-                <td>
-                    &nbsp; &nbsp; &nbsp;
-                    <button class="btn btn-primary btn-sm" type="button" onclick="getData()"><i
-                            class="fa fa-search"></i>
-                        查询
-                    </button>
-                    &nbsp; &nbsp; &nbsp;
-                    <button type="reset" class="btn btn-default btn-sm"><i
-                            class="fa fa-repeat"></i>
-                        重置
-                    </button>
-                </td>
-            </tr>
-        </table>
-    </div>
-</div>
-
-
-<div class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header no-padding">
-                <div class="table-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        <span class="white">&times;</span>
-                    </button>
-                    Results for "Latest Registered Domains
-                </div>
-            </div>
-
-            <div class="modal-body no-padding">
-            </div>
-
-            <div class="modal-footer no-margin-top">
-                <button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">
-                    <i class="ace-icon fa fa-times"></i>
-                    Close
-                </button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
-<!-- /section:basics/navbar.layout -->
 <div class="main-container" id="main-container">
-    <script type="text/javascript">
-        try {
-            ace.settings.check('main-container', 'fixed')
-        } catch (e) {
-        }
-    </script>
-
     <div class="main-content">
         <div class="main-content-inner">
-
-            <div class="row">
-                <div class="col-xs-12">
-                    <div>
-                        <table id="dataTables" class="table table-striped table-bordered table-hover">
-                            <thead>
-                            <tr>
-                                <th>TASK_ID</th>
-                                <th>手机号</th>
-                                <th>证件号码</th>
-                                <th>姓名</th>
-                                <th>身份证正面照</th>
-                                <th>身份证背面照</th>
-                                <th>身份证手持照</th>
-                                <th>订单编号</th>
-                                <th>审批</th>
-                            </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
+            <div class="page-content">
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="background: #E0EEE0">
+                        <form calss="form-inline" role="form" >
+                            <div class="form-group">
+                                <label for="billid" class="control-label">手机号：</label>
+                                <input type="text" id="billid" class="input-sm" placeholder="手机号"/>
+                                <label for="certcode" class="control-label">证件号码：</label>
+                                <input type="text" id="certcode" class="input-sm" placeholder="证件号码"/>
+                                <button class="btn btn-primary btn-sm" type="button" onclick="getData()"><i
+                                        class="fa fa-search"></i>
+                                    查询
+                                </button>
+                                <button type="reset" class="btn btn-default btn-sm"><i
+                                        class="fa fa-repeat"></i>
+                                    重置
+                                </button>
+                            </div>
+                        </form>
                     </div>
-
-                </div><!-- /.col -->
+                    <table class="table"  id="jqgrid"></table>
+                    <div id="gridPager"></div>
+                </div>
             </div>
         </div>
-    </div><!-- /.main-content -->
-
-    <div class="footer">
-        <div class="footer-inner">
-            <!-- #section:basics/footer -->
-            <div class="footer-content">
+        <div class="footer">
+            <div class="footer-inner">
+                <!-- #section:basics/footer -->
+                <div class="footer-content">
 						<span class="bigger-120">
 							<span class="blue bolder">Ace</span>
 							Application &copy; 2013-2014
 						</span>
 
-                &nbsp; &nbsp;
-                <span class="action-buttons">
+                    &nbsp; &nbsp;
+                    <span class="action-buttons">
 							<a href="#">
 								<i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
 							</a>
@@ -129,172 +67,142 @@
 								<i class="ace-icon fa fa-rss-square orange bigger-150"></i>
 							</a>
 						</span>
+                </div>
+
+                <!-- /section:basics/footer -->
             </div>
         </div>
     </div>
+</div>
 
-    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-    </a>
-</div><!-- /.main-container -->
+
+
+
+
 
 <script th:src="@{assets/js/date-time/bootstrap-datepicker.js}"></script>
-<script th:src="@{assets/js/dataTables/jquery.dataTables.js}"></script>
-<script th:src="@{assets/js/dataTables/jquery.dataTables.bootstrap.js}"></script>
-<script th:src="@{assets/js/dataTables/extensions/select/dataTables.select.js}"></script>
 <script th:src="@{assets/js/date-time/moment.js}"></script>
 <script th:src="@{assets/js/date-time/daterangepicker.js}"></script>
+<script th:src="@{assets/js/jqGrid/jquery.jqGrid.js}"></script>
+<script th:src="@{assets/js/jqGrid/i18n/grid.locale-en.js}"></script>
 
 <!-- inline scripts related to this page -->
 <!--Datatables.ajax.url(url).load();-->
 <script type="text/javascript">
-    //    $.ajax({
-    //                "type": "post",
-    //                "url": "/getData",
-    //                "dataType": "json",
-    //                "data": {},
-    //                "success"  :   function (result) {
-    //                    $('#dataTables').dataTable(result.dataList)
-    //                }
-    //    })
-    $(document).ready(function () {
-
-        $("#dataTables").dataTable({
-            "bProcessing": false, // 是否显示取数据时的那个等待提示
-            "bServerSide": true,//这个用来指明是通过服务端来取数据
-            "sAjaxSource": "http://localhost:9090/realNameReg/d",//这个是请求的地址
-            "bPaginate": true, //翻页功能
-            "bLengthChange": true, //改变每页显示数据数量
-            "bFilter": true, //过滤功能
-            "bSort": false, //排序功能
-            "bInfo": true,//页脚信息
-            "bAutoWidth": true,//自动宽度
-            "bDestroy": true,
-            "iDisplayLength": 10, //每页显示多少行
-            "bJQueryUI": true,
-            "searching": false,//屏蔽datatales的查询框
-
-            "oLanguage": { //国际化配置
-                "sProcessing": "正在获取数据，请稍后...",
-                "sLengthMenu": "显示 _MENU_ 条",
-                "sZeroRecords": "没有您要搜索的内容",
-                "sInfo": "从 _START_ 到  _END_ 条记录 总记录数为 _TOTAL_ 条",
-                "sInfoEmpty": "记录数为0",
-                "sInfoFiltered": "(全部记录数 _MAX_ 条)",
-                "sInfoPostFix": "",
-                "sSearch": "搜索",
-                "sUrl": "",
-                "oPaginate": {
-                    "sFirst": "第一页",
-                    "sPrevious": "上一页",
-                    "sNext": "下一页",
-                    "sLast": "最后一页"
+    var billid = $("#billid").val();
+    var certcode = $("#certcode").val();
+    $("#jqgrid").jqGrid({
+        datatype: "json", //将这里改为使用JSON数据
+//        url:'http://localhost:9090/realNameReg/findRealNameMsgs',
+        url:'/getRealNameTask',
+        postData:{ "billId": billid, "certCode": certcode},
+        height:  300,
+//        width:  $(window).width() - 130,
+        autowidth:true,
+        colNames:['TaskID','订单编号','用户名', '手机号', '证件号码','背面照','正面照','手持照','操作'],
+        colModel:[
+            {name:'taskId',index:'taskId',hidden:true},
+            {name:'ord_order_id',index:'ord_order_id',width:200 },
+            {name:'name',index:'name',width:200 },
+            {name:'bill_id',index:'bill_id',width:200 },
+            {name:'id_number',index:'id_number',width:200},
+            {name:'back_side_photo',index:'back_side_photo',hidden:true},
+            {name:'front_side_photo',index:'front_side_photo',hidden:true},
+            {name:'hand_held_photo',index:'hand_held_photo',hidden:true},
+            {
+                name: 'flag', index: 'flag', width: 100, align: 'center',
+                formatter: function (cellvalue, options, rowObject) {
+                    var taskId=rowObject["taskId"];
+                    var frontSidePhoto=rowObject["back_side_photo"];
+                    var backSidePhoto=rowObject["back_side_photo"];
+                    var handHeldPhoto=rowObject["back_side_photo"];
+                    var flag=taskId+','+frontSidePhoto+','+backSidePhoto+','+handHeldPhoto;
+                    return '<button type="button" class="btn btn-success btn-minier" onclick="agree(\''+flag+'\')">同&nbsp; &nbsp;意</button>' +
+                            ' &nbsp; <button type="button" class="btn btn-danger  btn-minier" onclick="noAgree(\''+flag+'\')">不同意</button>';
                 }
-            },
-            "aoColumnDefs": [
+            }
+        ],
+        sortname:'orderNum',
+        sortorder:'asc',
+        viewrecords:true,
+        rowNum:10,
+        pager : "#gridPager",
+        pgtext : "第 {0} 页，一共 {1} 页",
+        recordtext: "",
+        pgbuttons:true,
+        multiboxonly: true,
 
-                {
-                    "aTargets": [1],
-                    "sWidth": "300px"
-                }, {
-                    "aTargets": [2],
-                    "sWidth": "200px"
-                }, {
-                    "aTargets": [3],
-                    "bVisible": false,//此列不显示
-                    "sWidth": "50px"
-                }, {
-                    "aTargets": [4],
-                    "bVisible": false, //此列不显示
-                    "sWidth": "50px"
-                }, {
-                    "aTargets": [5],
-                    "bVisible": false,//此列不显示
-                    "sWidth": "50px"
-                },
-                {
-                    "aTargets": [7],
-                    "mRender": function (data, type, full) {
-                        var trData = full.toString();
-//                        var list=[];
-//                        list.push(JSON.stringify(full))
-//                        list=trData.split(",");
-                        var zheng = "sadfa";
-                        return '<button class="btn btn-success" onclick="approve(true)">同&nbsp; &nbsp;意</button> &nbsp; &nbsp; &nbsp;<button class="btn btn-danger" onclick="approve(false)">不同意</button>';
-                    }
-                }
-            ],
-            "sPaginationType": "full_numbers",
-            "fnServerData": retrieveData // 获取数据的处理函数
-        });
-    });
+        loadComplete : function() {
+            var table = this;
+            setTimeout(function(){
+//                styleCheckbox(table);
 
-    // 3个参数的名字可以随便命名,但必须是3个参数,少一个都不行
-    function retrieveData(sSource111, aoData111, fnCallback111) {
-        var billid = $("#billid").val();
-        var certcode = $("#certcode").val();
-        $.ajax({
-            url: sSource111,//这个就是请求地址对应sAjaxSource
-            data: {},//这个是把datatable的一些基本数据传给后台,比如起始位置,每页显示的行数
-            type: 'get',
-            dataType: 'json',
-            async: false,
-            success: function (result) {
-               // alert(result);
-                fnCallback111(result);//把返回的数据传给这个方法就可以了,datatable会自动绑定数据的
-            },
-            error:function(XMLHttpRequest, textStatus, errorThrown){
-                alert(XMLHttpRequest.readyState);
-                alert(XMLHttpRequest.status);
-                alert(textStatus);
+//                updateActionIcons(table);
+                updatePagerIcons(table);//翻页按钮CSS设置
+//                enableTooltips(table);
+            }, 0);
+        },
+
+        onSelectRow: function(id) {
+
         }
     });
-    }
-
+    $("#jqgrid").attr("style","border-collapse:collapse;border:none;},")
+    //    $("#jqgrid tr").each(function(){
+    //        $(this).children("td").attr("style","border:solid #000 1px;");
+    //        });
 
     function getData() {
-        $("#dataTables").DataTable().ajax.reload();
+        var billId = $("#billid").val();
+        var certCode = $("#certcode").val();
+        $("#jqgrid").jqGrid('setGridParam',{
+            postData:{"billId":billId,"certCode":certCode},
+        }).trigger('reloadGrid');
     }
-    function approve(flag) {
-//        $.teninedialog({
-//            title:'系统提示',
-//            content:'是否确认本次操作?',
-//            showCloseButton:true,
-//            otherButtons:["确定","取消"],
-//            otherButtonStyles:['btn-primary','btn-primary'],
-//            bootstrapModalOption:{keyboard: true},
-////            dialogShow:function(){
-////                alert('即将显示对话框');
-////            },
-////            dialogShown:function(){
-////                alert('显示对话框');
-////            },
-////            dialogHide:function(){
-////                alert('即将关闭对话框');
-////            },
-////            dialogHidden:function(){
-////                alert('关闭对话框');
-////            },
-//            clickButton:function(sender,modal,index){
-////                if(index==0){
-////                    $.ajax({
-////                        "type": "post",
-////                        "url": "/getData",
-////                        "data": { "appr": flag},
-////                        "success": function (result) {
-////                            $("#dataTables").DataTable().ajax.reload();
-////                        }
-////                    })
-////                }
-////                alert('选中第'+index+'个按钮：'+sender.html());
-////                $(this).closeDialog(modal);
-//            }
-//        });
-        $.teninedialog({
-            title:'系统提示',
-            content:'确认删除本条记录?'
-        });
+    function agree(data){
+        var taskId=data.split(",")[0];
+        $.ajax({
+            "type": "post",
+            "url": "/approval",
+            "data": {
+                "approval":true,
+                "taskId":taskId
+            },
+            "success": function (result) {
+                getData();
+            }
+        })
     }
+    function noAgree(data){
+        var taskId=data.split(",")[0];
+        $.ajax({
+            "type": "post",
+            "url": "/approval",
+            "data": {
+                "approval":false,
+                "taskId":taskId
+            },
+            "success": function (result) {
+                getData();
+            }
+        })
+    }
+    function updatePagerIcons(table) {
+        var replacement =
+        {
+            'ui-icon-seek-first' : 'ace-icon fa fa-angle-double-left bigger-140',
+            'ui-icon-seek-prev' : 'ace-icon fa fa-angle-left bigger-140',
+            'ui-icon-seek-next' : 'ace-icon fa fa-angle-right bigger-140',
+            'ui-icon-seek-end' : 'ace-icon fa fa-angle-double-right bigger-140'
+        };
+        $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+            var icon = $(this);
+            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+
+            if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+        })
+    }
+
 </script>
 </body>
 </html>
