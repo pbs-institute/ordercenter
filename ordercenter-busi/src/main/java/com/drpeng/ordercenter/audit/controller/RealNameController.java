@@ -50,7 +50,6 @@ public class RealNameController {
         retMap.put("page",page);
         retMap.put("records",totalRecord);
         retMap.put("rows",ordList);
-        System.out.println(ordList.get(0));
         return retMap;
     }
     @ResponseBody
