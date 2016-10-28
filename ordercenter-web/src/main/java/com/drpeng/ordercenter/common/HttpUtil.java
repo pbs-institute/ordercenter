@@ -54,7 +54,7 @@ public class HttpUtil {
      * @return
      * @throws Exception
      */
-    public  static Map doPost(String url, Map param, String charset) throws Exception {
+    public  static Map doPost(String url, Map param, String charset,HttpClient httpClient) throws Exception {
 
         if (charset == null || charset == "") {
             charset = "UTF-8";
@@ -62,7 +62,7 @@ public class HttpUtil {
 
         long responseLength = 0; // 响应长度
         String responseContent = null; // 响应内容
-        HttpClient httpClient = new DefaultHttpClient(); // 创建默认的httpClient实例
+//        HttpClient httpClient = new DefaultHttpClient(); // 创建默认的httpClient实例
         String urlParam= getParam(param);
         url= url+"?"+urlParam;
         try {
@@ -105,7 +105,7 @@ public class HttpUtil {
      * @return
      * @throws Exception
      */
-    public static Map doGet(String url,Map param ,String charset) throws Exception {
+    public static Map doGet(String url,Map param ,String charset, HttpClient httpClient) throws Exception {
 
         if (charset == null || charset == "") {
             charset = "UTF-8";
@@ -115,7 +115,7 @@ public class HttpUtil {
         log.info("http get请求开始，请求URL:[" + url + "]");
         long responseLength = 0; // 响应长度
         String responseContent = null; // 响应内容
-        HttpClient httpClient = new DefaultHttpClient(); // 创建默认的httpClient实例
+//        HttpClient httpClient = new DefaultHttpClient(); // 创建默认的httpClient实例
 
         try {
             // post请求

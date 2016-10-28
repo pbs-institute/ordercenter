@@ -162,7 +162,7 @@ public class ProcessEngineAutoConfigurationTest {
 
     @Test
     public void testCount(){
-        long count = activitiBaseService.countTaskByValueLike(null);
+        long count = activitiBaseService.countTaskByValueLike(null,0);
         System.out.println(count);
     }
 
@@ -172,7 +172,7 @@ public class ProcessEngineAutoConfigurationTest {
         Map<String,String> kmap = new HashMap<String,String>();
         kmap.put("bill_id","16012312334");
         kmap.put("id_number","222111222333666");
-        List<Task> tasks = activitiBaseService.qryTaskByValuelike(kmap,0,10);
+        List<Task> tasks = activitiBaseService.qryTaskByValuelike(kmap,0,10,0);
         List ordList = new ArrayList();
         JSONObject rtnObj = new JSONObject();
         for (Task task : tasks) {

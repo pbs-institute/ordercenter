@@ -80,7 +80,7 @@ public class ApprovalController extends BaseController {
         resMap.put("billId", billId);
         resMap.put("certCode", certCode);
         System.out.println(busiUrl + SystemConstants.BUSI_REALNAMEREG_URL);
-        Map result = HttpUtil.doGet(busiUrl + SystemConstants.BUSI_REALNAMEREG_URL, resMap,null);
+        Map result =sendGet(busiUrl + SystemConstants.BUSI_REALNAMEREG_URL, resMap,null);
         System.out.println(result);
         return result;
     }
@@ -100,7 +100,7 @@ public class ApprovalController extends BaseController {
         jsonRequest.put("taskId", taskId);
         jsonRequest.put("approval", approvalTag);
         System.out.println(busiUrl + SystemConstants.API_ORGANIZES_URL);
-        Map result = HttpUtil.doPost(busiUrl + SystemConstants.API_ORGANIZES_URL, jsonRequest,null);
+        Map result = sendPost(busiUrl + SystemConstants.API_ORGANIZES_URL, jsonRequest,null);
         return (String) result.get("result");
     }
 }
