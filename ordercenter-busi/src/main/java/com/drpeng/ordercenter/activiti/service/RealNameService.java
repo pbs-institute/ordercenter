@@ -34,7 +34,7 @@ public class RealNameService implements Serializable {
      */
     public void manualCheckRefused(DelegateExecution delegateExecution){
         System.out.println("检查失败");
-        Long orderId = (Long) delegateExecution.getVariable("ord_order_id");
+        String orderId = (String) delegateExecution.getVariable("ord_order_id");
         placeOrderService.updateOrderStatus(Long.valueOf(orderId),2);
     }
 
