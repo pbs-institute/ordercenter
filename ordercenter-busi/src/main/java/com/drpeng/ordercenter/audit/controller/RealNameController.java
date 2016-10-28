@@ -18,16 +18,6 @@ import java.util.Map;
 public class RealNameController {
     @Autowired
     private IActivitiBaseService activitiBaseService;
-    @RequestMapping(value = "/d",method = RequestMethod.GET,consumes = "application/json")
-    public Map<String,Object> findRealNameMsgsd(@RequestParam(value="billId",required = false) String billId,@RequestParam(value="idNumber",required = false) String idNumber){
-        Map map = new HashMap();
-        if(billId != null && !billId.isEmpty())
-            map.put("bill_id",billId);
-        if(idNumber != null && !idNumber.isEmpty())
-            map.put("id_number",idNumber);
-        List<Task> taskList = activitiBaseService.qryTaskByValuelike(map,0,10);
-        return null;
-    }
     @ResponseBody
     @RequestMapping(value = "/findRealNameMsgs",method = RequestMethod.GET)
     public Map findRealNameMsgs(@RequestParam String page, String rows,String billId,String certCode){
@@ -38,7 +28,7 @@ public class RealNameController {
         if(certCode!=null&&!certCode.equals("")){
             map.put("id_number",certCode);
         }
-        int totalRecord  = (int)activitiBaseService.countTaskByValueLike(map);//总记录数
+        int totalRecord  = (int)activitiBaseService.countTaskByValueLike(map,8000001);//总记录数
         int total=totalRecord % Integer.parseInt(rows) == 0 ? totalRecord
                 / Integer.parseInt(rows) : totalRecord / Integer.parseInt(rows)
                 + 1;//计算总页数
@@ -47,7 +37,7 @@ public class RealNameController {
         if(Integer.valueOf(page)>1){
             iDisplayStar=iDisplayEnd-Integer.valueOf(rows);
         }
-        List<Task> taskList = activitiBaseService.qryTaskByValuelike(map, iDisplayStar, Integer.valueOf(rows));
+        List<Task> taskList = activitiBaseService.qryTaskByValuelike(map,8000001, iDisplayStar, Integer.valueOf(rows));
         List ordList = new ArrayList();
         for(Task task:taskList){
             Map ordMap = activitiBaseService.qryTaskFormDataByExecutionId(task.getExecutionId());
