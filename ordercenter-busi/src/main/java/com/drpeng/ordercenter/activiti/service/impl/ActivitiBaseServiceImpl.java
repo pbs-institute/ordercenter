@@ -1,13 +1,10 @@
 package com.drpeng.ordercenter.activiti.service.impl;
 
 import com.drpeng.ordercenter.activiti.service.IActivitiBaseService;
-import com.drpeng.ordercenter.persistence.entity.CfgBusinessProcessMapping;
-import com.drpeng.ordercenter.persistence.entity.CfgBusinessProcessMappingExample;
-import com.drpeng.ordercenter.persistence.mapper.CfgBusinessMapper;
-import com.drpeng.ordercenter.persistence.mapper.CfgBusinessProcessMappingMapper;
+import com.drpeng.ordercenter.persistence.entity.CfgBusinessProcess;
+import com.drpeng.ordercenter.persistence.entity.CfgBusinessProcessExample;
+import com.drpeng.ordercenter.persistence.mapper.CfgBusinessProcessMapper;
 import org.activiti.engine.*;
-import org.activiti.engine.form.FormProperty;
-import org.activiti.engine.form.TaskFormData;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
@@ -35,7 +32,7 @@ public class ActivitiBaseServiceImpl implements IActivitiBaseService {
     @Autowired
     FormService formService;
     @Autowired
-    CfgBusinessProcessMappingMapper cfgBusinessProcessMappingMapper;
+    CfgBusinessProcessMapper cfgBusinessProcessMapper;
     /**
      * 启动一个流程
      * @param businessId 业务编码;
@@ -49,19 +46,19 @@ public class ActivitiBaseServiceImpl implements IActivitiBaseService {
         if (null == regionId||regionId.isEmpty()){
             regionId = "all";
         }
-        CfgBusinessProcessMappingExample example = new CfgBusinessProcessMappingExample();
+        CfgBusinessProcessExample example = new CfgBusinessProcessExample();
         example.or()
                 .andBusinessIdEqualTo(businessId)
-                .andRegionIdEqualTo(regionId)
+                .andCityIdEqualTo(regionId)
                 .andStatusEqualTo("0");
-        List<CfgBusinessProcessMapping> mappingList = cfgBusinessProcessMappingMapper
+        List<CfgBusinessProcess> mappingList = cfgBusinessProcessMapper
                 .selectByExample(example);
-        CfgBusinessProcessMapping processMapping = mappingList.get(0);
+        CfgBusinessProcess cfgBusinessProcess = mappingList.get(0);
 
         //去找对应ProcessKey中版本最新的流程
         ProcessDefinition processDefinition = repositoryService
                 .createProcessDefinitionQuery()
-                .processDefinitionKey(processMapping.getProcessId())
+                .processDefinitionKey(cfgBusinessProcess.getProcessKey())
                 .latestVersion()
                 .singleResult();
 
